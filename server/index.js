@@ -12,11 +12,6 @@ const apiKeys = {
   privateKey: "jHV8REsJiTn2_CJWHyOeUmaBuAqZycpaMtoGhfZyMy4",
 };
 
-app.use(express.static(path.join(dirname, "/client/build")));
-console.log(path.join(dirname, "client", "build", "index.html"), " pathwow");
-app.get("*", (req, res) => {
-  res.sendFile(path.join(dirname, "client", "build", "index.html"));
-});
 webPush.setVapidDetails(
   "mailto:aryan.smart832@gmail.com",
   apiKeys.publicKey,
@@ -32,13 +27,13 @@ app.use(express.json());
 
 const subDatabase = [];
 
-app.post("/save-subscription", (req, res) => {
+app.post("/api/save-subscription", (req, res) => {
   subDatabase.push(req.body);
   res.json({ status: "Success", message: "Subscription saved!", subDatabase });
 });
 
 const details = [];
-app.post("/save-details", (req, res) => {
+app.post("/api/save-details", (req, res) => {
   details.push(req.body);
   //   console.log("req.body= ", req.body);
   //   console.log("req.body= ", details[details.length - 1]);
@@ -59,6 +54,12 @@ app.post("/save-details", (req, res) => {
 //   );
 //   res.json({ status: "Success", message: "Message sent to push service" });
 // });
+
+app.use(express.static(path.join(dirname, "/client/build")));
+console.log(path.join(dirname, "client", "build", "index.html"), " pathwow");
+app.get("*", (req, res) => {
+  res.sendFile(path.join(dirname, "client", "build", "index.html"));
+});
 
 app.listen(port, () => {
   console.log("Server running on port 5000");
