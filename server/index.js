@@ -12,13 +12,10 @@ const apiKeys = {
   privateKey: "jHV8REsJiTn2_CJWHyOeUmaBuAqZycpaMtoGhfZyMy4",
 };
 
-app.use(express.static(path.join(dirname, "../", "/client/build")));
-console.log(
-  path.join(dirname, "../", "client", "build", "index.html"),
-  " pathwow"
-);
+app.use(express.static(path.join(dirname, "/client/build")));
+console.log(path.join(dirname, "client", "build", "index.html"), " pathwow");
 app.get("*", (req, res) => {
-  res.sendFile(path.join(dirname, "../", "client", "build", "index.html"));
+  res.sendFile(path.join(dirname, "client", "build", "index.html"));
 });
 webPush.setVapidDetails(
   "mailto:aryan.smart832@gmail.com",
