@@ -8,7 +8,7 @@ function App() {
 
   const storeDetails = async () => {
     try {
-      const res = await fetch("http://localhost:4000/api/save-details", {
+      const res = await fetch("http://localhost:5000/api/save-details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

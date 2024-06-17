@@ -4,7 +4,7 @@ import webPush from "web-push";
 import path from "path";
 const dirname = path.resolve();
 
-const port = 4000;
+const port = 5000;
 const app = express();
 const apiKeys = {
   publicKey:
@@ -27,7 +27,7 @@ webPush.setVapidDetails(
 
 // Use CORS with the defined options
 // app.use(cors(corsOptions));
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // app.get("/", (req, res) => {
@@ -71,7 +71,7 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Server running on port 4000");
+  console.log("Server running on port 5000");
 });
 
 export default app;
