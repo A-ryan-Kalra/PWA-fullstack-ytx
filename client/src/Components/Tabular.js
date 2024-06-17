@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "../../src/Components/ui/table";
 import { BreadcrumbDemo } from "./Breadcrumb";
+import { PopoverDemo } from "./Popover";
 import TooltipDemo from "./ToolTip";
 import {
   HomeIcon,
@@ -22,17 +23,21 @@ export default function TableDemo({ notification }) {
     <div className="p-2 overflow-x-auto">
       <div className="flex h-full gap-5 border-2 w-fit pr-5 mx-auto">
         <div className="min-h-full flex flex-col border-r-2 p-2 gap-4 ">
-          <TooltipDemo Icon={HomeIcon} title={"Home"} />
+          <TooltipDemo Icon={HomeIcon} title={"Home"} href="/" />
           <TooltipDemo
             Icon={LayoutDashboardIcon}
             title={"Dashboard"}
             color={"bg-black text-white"}
+            href="/dashboard"
           />
           <TooltipDemo Icon={ShoppingCartIcon} title={"Orders"} />
           <TooltipDemo Icon={User} title={"User"} />
         </div>
         <div className="flex flex-col my-5 gap-3">
-          <BreadcrumbDemo />
+          <div className="flex items-center justify-between">
+            <BreadcrumbDemo />
+            <PopoverDemo />
+          </div>
           <div className=" w-[1320px]  mx-auto max-h-[600px] overflow-y-auto border-2 rounded-lg border-gray-200 shadow-lg p-3">
             <h1 className="font-semibold">Notifications</h1>
             <p className="text-[15px] text-neutral-600">

@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import SearchSideBar from "./SearchSideBar";
 import { Progress } from "./ui/progress";
 import { ClipLoader } from "react-spinners";
-
 function Home() {
   const [product, setProduct] = useState();
   const [temporary, setTemporary] = useState();
   const [trigger, setTrigger] = useState(false);
   const [bar, setBar] = useState(0);
-  const [progress, setProgress] = React.useState(3);
+
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
 
@@ -66,7 +65,7 @@ function Home() {
       {trigger && <Progress value={bar} />}
 
       <div className="min-h-screen  md:flex-row flex-col w-full gap-6 flex">
-        <div className="md:min-w-[440px] md:max-w-[450px] z-10 h-fit sticky top-[79px]">
+        <div className="md:min-w-[440px] md:max-w-[450px] z-10 h-fit sticky top-[89px]">
           <h1 className="text-[25px] bg-white  text-center font-mono">
             Generate a post
           </h1>
@@ -78,7 +77,7 @@ function Home() {
             Dummy Checker
           </h1>
 
-          <div className="border-l-2 flex flex-wrap justify-start p-2 max-md:justify-center gap-3">
+          <div className="border-l-2 border-b-2 flex flex-wrap justify-start p-2 max-md:justify-center gap-3">
             {product ? (
               product.slice(0, 10).map((item, index) => (
                 <div
@@ -99,7 +98,7 @@ function Home() {
                 </div>
               ))
             ) : (
-              <div className=" w-[100vh] flex justify-center items-center h-[80vh] ">
+              <div className="flex justify-center items-center md:w-[50vh] h-[30vh]">
                 <ClipLoader size={50} color="#44ab85" speedMultiplier={1} />
               </div>
             )}
@@ -119,15 +118,11 @@ function Home() {
           {[...Array(Math.round(totalPage / 10))].slice(0, 10)?.map((_, i) => (
             <span
               key={i}
-              style={{
-                backgroundColor: i + 1 === page ? "blue" : "",
-                color: i + 1 === page ? "white" : "black",
-              }}
               onClick={() => handlePage(i + 1)}
               className={`p-2 ${
                 i + 1 === page
-                  ? "hover:opacity-70 cursor-pointer"
-                  : "hover:bg-blue-400 cursor-pointer"
+                  ? "hover:opacity-70 cursor-pointer border-2 rounded-md border-gray-300"
+                  : "hover:bg-blue-400 cursor-pointer rounded-md"
               }`}
               index={i}
             >

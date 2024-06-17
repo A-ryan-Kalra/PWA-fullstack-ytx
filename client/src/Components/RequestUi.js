@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { notificationRequest } from "../constants/RequestPermission";
+import Req from "../constants/RequestPermission";
 import { format } from "date-fns";
 
 function RequestUi() {

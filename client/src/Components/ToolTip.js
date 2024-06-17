@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../Components/ui/button";
 import {
   Tooltip,
@@ -6,13 +7,19 @@ import {
   TooltipTrigger,
 } from "../Components/ui/tooltip";
 
-export default function TooltipDemo({ Icon, title, color }) {
+export default function TooltipDemo({ Icon, title, color, href }) {
+  const navigation = useNavigate();
+
   return (
-    <>
+    <div>
       <TooltipProvider className="">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="outline" className={color}>
+            <Button
+              onClick={() => navigation(href)}
+              variant="outline"
+              className={color}
+            >
               <Icon />
             </Button>
           </TooltipTrigger>
@@ -21,6 +28,6 @@ export default function TooltipDemo({ Icon, title, color }) {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-    </>
+    </div>
   );
 }
