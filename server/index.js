@@ -18,15 +18,15 @@ webPush.setVapidDetails(
   apiKeys.privateKey
 );
 
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   preflightContinue: false,
-//   optionsSuccessStatus: 204,
-// };
+const corsOptions = {
+  origin: "https://pwa-fullstack-ytx.vercel.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
 
 // Use CORS with the defined options
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 // app.use(cors());
 app.use(express.json());
 
