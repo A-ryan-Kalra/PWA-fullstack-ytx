@@ -26,7 +26,7 @@ function urlBase64ToUnit8Array(base4String) {
 }
 
 const saveSubscription = async (subscription) => {
-  const res = await fetch("/api/save-subscription", {
+  const res = await fetch("http://localhost:4000/api/save-subscription", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
