@@ -26,7 +26,7 @@ webPush.setVapidDetails(
 // };
 
 // Use CORS with the defined options
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 // app.use(cors());
 app.use(express.json());
 
