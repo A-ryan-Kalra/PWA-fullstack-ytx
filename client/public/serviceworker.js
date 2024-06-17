@@ -27,14 +27,14 @@ function urlBase64ToUnit8Array(base4String) {
 
 const saveSubscription = async (subscription) => {
   const res = await fetch("http://localhost:5000/api/save-subscription", {
-    method: "post",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(subscription),
   });
-
-  return res.json();
+  const data = res.json();
+  return data;
 };
 
 self.addEventListener("activate", async (e) => {
