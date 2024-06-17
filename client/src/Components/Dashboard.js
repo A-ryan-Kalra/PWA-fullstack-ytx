@@ -29,7 +29,7 @@ function Dashboard() {
   return (
     <div className="min-h-[90vh] w-full">
       <TableDemo notification={notification} />
-      {/* <RequestUi /> */}
+      <RequestUi />
     </div>
   );
 }
