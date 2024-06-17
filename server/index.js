@@ -4,7 +4,7 @@ import webPush from "web-push";
 import path from "path";
 const dirname = path.resolve();
 
-const port = 5000;
+const port = 4000;
 const app = express();
 const apiKeys = {
   publicKey:
@@ -62,7 +62,7 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Server running on port 5000");
+  console.log("Server running on port 4000");
 });
 
 export default app;

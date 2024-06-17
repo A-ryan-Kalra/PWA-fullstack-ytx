@@ -26,7 +26,7 @@ function urlBase64ToUnit8Array(base4String) {
 }
 
 const saveSubscription = async (subscription) => {
-  const res = await fetch("http://localhost:5000/api/save-subscription", {
+  const res = await fetch("/api/save-subscription", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -52,6 +52,7 @@ self.addEventListener("activate", async (e) => {
 });
 
 self.addEventListener("push", (e) => {
+  console.log("e.data=", e.data);
   console.log("e.data.text ", e.data.text());
   const details = JSON.parse(e.data.text());
   console.log(details);
@@ -60,6 +61,7 @@ self.addEventListener("push", (e) => {
   e.waitUntil(
     self.registration.showNotification(details.title, {
       body: details.body,
+      icon: "/images/logo.png",
     })
   );
 });
