@@ -52,16 +52,12 @@ self.addEventListener("activate", async (e) => {
 });
 
 self.addEventListener("push", (e) => {
-  console.log("e.data=", e.data);
   console.log("e.data.text ", e.data.text());
   const details = JSON.parse(e.data.text());
   console.log(details);
   //   const val = document.getElementById("text").value;
   //   console.log("val=", val);
-  e.waitUntil(
-    self.registration.showNotification(details.title, {
-      body: details.body,
-      icon: "/images/logo.png",
-    })
-  );
+  self.registration.showNotification(details.title, {
+    body: details.body,
+  });
 });
