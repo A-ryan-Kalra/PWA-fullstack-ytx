@@ -47,13 +47,9 @@ app.post("/api/save-details", (req, res) => {
   res.send({ status: "Success", details });
 });
 
-// app.get("/send-notification", (req, res) => {
-//   webPush.sendNotification(
-//     subDatabase[subDatabase.length - 1],
-//     JSON.stringify({ data: "Hello New World!", data2: "Hello old world!" })
-//   );
-//   res.json({ status: "Success", message: "Message sent to push service" });
-// });
+app.get("/api/get-notification", (req, res) => {
+  res.send({ status: "Success", details });
+});
 
 app.use(express.static(path.join(dirname, "/client/build")));
 console.log(path.join(dirname, "client", "build", "index.html"), " pathwow");
