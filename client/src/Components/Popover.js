@@ -40,7 +40,7 @@ export function PopoverDemo() {
         body: JSON.stringify(details),
       });
       const data = await res.json();
-      console.log(data);
+      //   console.log(data);
       setDetails({
         body: "",
         title: "",
@@ -51,7 +51,7 @@ export function PopoverDemo() {
     }
   };
 
-  console.log("notification ", details);
+  //   console.log("notification ", details);
 
   return (
     <Popover className="">

@@ -19,7 +19,7 @@ function Dashboard() {
     }
   };
 
-  console.log("notification ", notification);
+  // console.log("notification ", notification);
   useEffect(() => {
     storeDetails();
   }, [updateNotificationAtom]);
