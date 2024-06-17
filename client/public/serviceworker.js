@@ -33,7 +33,7 @@ const saveSubscription = async (subscription) => {
     },
     body: JSON.stringify(subscription),
   });
-  const data = res.json();
+  const data = await res.json();
   return data;
 };
 
