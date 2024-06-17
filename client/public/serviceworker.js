@@ -57,7 +57,9 @@ self.addEventListener("push", (e) => {
   console.log(details);
   //   const val = document.getElementById("text").value;
   //   console.log("val=", val);
-  self.registration.showNotification(details.title, {
-    body: details.body,
-  });
+  e.waitUntil(
+    self.registration.showNotification(details.title, {
+      body: details.body,
+    })
+  );
 });
