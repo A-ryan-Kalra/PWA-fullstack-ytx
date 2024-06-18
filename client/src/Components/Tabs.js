@@ -32,7 +32,7 @@ export default function TabsDemo() {
     useAtom(updateNotification);
   const handleRegister = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/user/register", {
+      const res = await fetch("/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export default function TabsDemo() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/user/login", {
+      const res = await fetch("/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
