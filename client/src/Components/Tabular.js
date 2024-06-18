@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Users from "../Users";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function TableDemo({
   notification,

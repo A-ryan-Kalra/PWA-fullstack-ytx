@@ -19,6 +19,8 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { getSubscription } from "../getSubscription";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 export const updateNotification = atom(false);
 
 export function PopoverDemo({ profilePicture, name, endpoint }) {
@@ -26,6 +28,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   const [userData, setUserData] = useState();
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
+  const navigate = useNavigate();
   //   const [notification, setNotifications] = useState();
   const now = new Date();
   const formattedDate = format(now, "yyyy-MM-dd hh:mm a");

@@ -31,7 +31,6 @@ export default function TabsDemo({}) {
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
   const handleRegister = async () => {
-    show(() => setShow((prev) => !prev));
     try {
       const res = await fetch("/api/user/register", {
         method: "POST",
@@ -93,7 +92,7 @@ export default function TabsDemo({}) {
     }
   };
 
-  console.log("user", user);
+  // console.log("user", user);
   return (
     <Tabs defaultValue="account" className="w-[300px] md:w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
