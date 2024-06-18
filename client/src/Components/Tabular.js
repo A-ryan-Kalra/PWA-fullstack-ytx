@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -17,8 +18,30 @@ import {
   LayoutDashboardIcon,
   User,
 } from "lucide-react";
+import Users from "../Users";
 
-export default function TableDemo({ notification }) {
+export default function TableDemo({
+  notification,
+  setUpdateNotificationAtom,
+  updateNotificationAtom,
+}) {
+  const [users, setUsers] = useState();
+  const getUsers = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/user/getusers");
+      const data = await res.json();
+      // setUpdateNotificationAtom((prev) => !prev);
+      // console.log(data);
+      setUsers(data);
+    } catch (error) {
+      console.error("Something went wrong ", error);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, [updateNotificationAtom]);
+
   return (
     <div className="p-2 overflow-x-auto">
       <div className="flex h-full gap-5 border-2 w-fit pr-5 mx-auto">
@@ -36,8 +59,11 @@ export default function TableDemo({ notification }) {
         <div className="flex flex-col my-5 gap-3">
           <div className="flex items-center justify-between">
             <BreadcrumbDemo />
-            <PopoverDemo />
+            {/* <PopoverDemo /> */}
           </div>
+
+          <Users data={users} />
+
           <div className=" w-[1320px]  mx-auto max-h-[600px] overflow-y-auto border-2 rounded-lg border-gray-200 shadow-lg p-3">
             <h1 className="font-semibold">Notifications</h1>
             <p className="text-[15px] text-neutral-600">

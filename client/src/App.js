@@ -4,6 +4,7 @@ import Navigation from "./Components/Navigation";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "./Components/Dashboard";
 import Footer from "./Components/Footer";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* <Route element={<ProtectedRoute />}>
+        </Route> */}
       </Routes>
       <Footer />
     </div>

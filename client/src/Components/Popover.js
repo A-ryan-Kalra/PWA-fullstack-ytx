@@ -8,13 +8,20 @@ import {
   PopoverTrigger,
 } from "../Components/ui/popover";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RequestPermission from "../constants/RequestPermission";
 import { atom, useAtom } from "jotai";
 import { allowNotification } from "../constants/data";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import { getSubscription } from "../getSubscription";
 export const updateNotification = atom(false);
 
-export function PopoverDemo() {
+export function PopoverDemo({ profilePicture, name }) {
   const [notificationAtom, setNotificationAtom] = useAtom(allowNotification);
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
@@ -26,13 +33,12 @@ export function PopoverDemo() {
     body: "",
     createdAt: formattedDate || "",
   });
+  const { notificationRequest, data } = RequestPermission();
+  const [subscription, setSubscription] = useState(null);
 
-  const { notificationRequest } = RequestPermission();
-
-  //   console.log(formattedDate);
   const storeDetails = async () => {
     try {
-      const res = await fetch("/api/user/save-details", {
+      const res = await fetch("http://localhost:5000/api/user/save-details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,17 +62,32 @@ export function PopoverDemo() {
   return (
     <Popover className="">
       <PopoverTrigger asChild>
-        <Button
-          className="border-2 flex items-center justify-center  duration-200 group bg-black text-white gap-2"
-          variant="outline"
-          onClick={notificationRequest}
-        >
-          <PlusIcon className="w-[15px] h-[15px] border-white group-hover:border-black border-[1px] font-semibold rounded-full" />
-          <span>Add Notification</span>
-        </Button>
+        <div className="">
+          <TooltipProvider className="">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className=" hover:bg-blue-500  group text-black flex"
+                  variant="outline"
+                  onClick={notificationRequest}
+                >
+                  <img
+                    className={"w-6 h-6 rounded-full"}
+                    src={profilePicture}
+                    alt={name}
+                  />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="bg-black font-semibold" side="left">
+                {/* <PlusIcon className="w-[17px] h-[16px]  border-black group-hover:border-white border-[2px] group-hover:text-white font-semibold rounded-full" /> */}
+                <p>Send notification to {name}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </PopoverTrigger>
       {notificationAtom && (
-        <PopoverContent className="w-80">
+        <PopoverContent className="z-[1000] w-80">
           <div className="grid gap-4">
             <div className="space-y-2">
               <h4 className="font-medium leading-none">Notification</h4>

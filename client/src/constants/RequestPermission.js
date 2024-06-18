@@ -1,10 +1,20 @@
 import { useAtom } from "jotai";
 import { allowNotification } from "./data";
+import { getSubscription } from "../getSubscription";
+import { useEffect, useState } from "react";
+import { setDate } from "date-fns";
 
 // import kl from "../../public/serviceworker";
 function RequestPermission() {
   const [notificationAtom, setNotificationAtom] = useAtom(allowNotification);
-  // console.log("notificationAtom", notificationAtom);
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("userData"));
+    setUserData(data);
+  }, []);
+
+  // console.log("UserData", userData);
   const checkPermission = () => {
     try {
       if (!"serviceWorker" in navigator) {
@@ -38,12 +48,29 @@ function RequestPermission() {
       console.error("Failure ", error);
     }
   };
-
+  const fetchSubscription = async () => {
+    console.log("Triggered");
+    const sub = await getSubscription();
+    var uploadedData = { username: userData.username };
+    uploadedData.endpoint = sub;
+    console.log("uploadedData", uploadedData);
+    // Send subscription to the backend server
+    await fetch("http://localhost:5000/api/user/save-subscription", {
+      method: "PUT",
+      body: JSON.stringify(uploadedData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("sub=", sub);
+    return sub;
+  };
   const notificationRequest = async () => {
     checkPermission();
     await requestNotficationPermission();
     await registerSW();
     const kl = await registerSW();
+    const data = fetchSubscription();
     // kl.showNotification("Chal bhai", {
     //   body: "Nice come back",
     // });

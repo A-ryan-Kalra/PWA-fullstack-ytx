@@ -14,16 +14,22 @@ webPush.setVapidDetails(
   apiKeys.publicKey,
   apiKeys.privateKey
 );
-export const saveEndcpoint = async (req, res) => {
-  const body = req.body;
+export const saveEndpoint = async (req, res) => {
+  const { username, endpoint } = req.body;
   try {
-    console.log("body= wow", body);
-    const newEndpoint = new User({
-      endpoint: body,
-    });
-    await newEndpoint.save();
-    console.log("newEndpoint,", newEndpoint);
-    res.status(200).json(newEndpoint);
+    console.log("username=", username);
+    console.log("endpoint=", endpoint);
+    const endPoint = await User.findOneAndUpdate(
+      { username },
+      {
+        $set: {
+          endpoint,
+        },
+      }
+    );
+
+    console.log("newEndpoint,", endPoint);
+    res.status(200).json(endPoint);
   } catch (error) {
     console.error(error);
   }
@@ -62,8 +68,47 @@ export const saveDetails = async (req, res) => {
 export const getDetails = async (req, res) => {
   try {
     const getDetails = await Detail.find();
-    console.log("Details Found=", getDetails);
+    // console.log("Details Found=", getDetails);
     res.status(200).json(getDetails);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createUser = async (req, res) => {
+  try {
+    const form = req.body;
+    const newUser = await User.create({
+      username: form.username,
+      password: form.password,
+    });
+
+    res.status(200).json(newUser);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({
+      username,
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User does not exit" });
+    }
+    res.status(200).json(user);
+    // console.log(req.body);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    res.status(200).json(allUsers);
   } catch (error) {
     console.error(error);
   }
