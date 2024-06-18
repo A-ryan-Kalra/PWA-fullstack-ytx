@@ -32,7 +32,7 @@ export function PopoverDemo() {
   //   console.log(formattedDate);
   const storeDetails = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/save-details", {
+      const res = await fetch("http://localhost:5000/api/user/save-details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export function PopoverDemo() {
         body: JSON.stringify(details),
       });
       const data = await res.json();
-      //   console.log(data);
+      console.log(data);
       setDetails({
         body: "",
         title: "",

@@ -26,7 +26,7 @@ function urlBase64ToUnit8Array(base4String) {
 }
 
 const saveSubscription = async (subscription) => {
-  const res = await fetch("http://localhost:5000/api/save-subscription", {
+  const res = await fetch("http://localhost:5000/api/user/save-subscription", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -34,6 +34,7 @@ const saveSubscription = async (subscription) => {
     body: JSON.stringify(subscription),
   });
   const data = await res.json();
+  console.log("DATE= ", data);
   return data;
 };
 

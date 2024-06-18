@@ -58,7 +58,7 @@ export default function TableDemo({ notification }) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {notification?.details?.map((invoice, index) => (
+                {notification?.map((invoice, index) => (
                   <TableRow key={index}>
                     <TableCell className=" font-medium">{index + 1}</TableCell>
                     <TableCell className=" text-left">

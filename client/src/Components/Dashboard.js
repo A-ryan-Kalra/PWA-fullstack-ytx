@@ -10,10 +10,12 @@ function Dashboard() {
     useAtom(updateNotification);
   const storeDetails = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/get-notification");
+      const res = await fetch(
+        "http://localhost:5000/api/user/get-notification"
+      );
       const data = await res.json();
+      console.log(data);
       setNotifications(data);
-      // console.log(data);
     } catch (error) {
       console.error("Something went wrong ", error);
     }

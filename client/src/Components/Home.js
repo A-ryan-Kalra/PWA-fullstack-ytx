@@ -77,7 +77,7 @@ function Home() {
             Dummy Checker
           </h1>
 
-          <div className="border-l-2 border-b-2 flex flex-wrap justify-start p-2 max-md:justify-center gap-3">
+          <div className="border-l-2 flex flex-wrap justify-start p-2 max-md:justify-center gap-3">
             {product ? (
               product.slice(0, 10).map((item, index) => (
                 <div
