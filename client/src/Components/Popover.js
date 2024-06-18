@@ -50,8 +50,6 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   }, []);
 
   const { notificationRequest, data } = RequestPermission();
-  const [subscription, setSubscription] = useState(null);
-  console.log("endpoint=", endpoint);
 
   const storeDetails = async () => {
     try {

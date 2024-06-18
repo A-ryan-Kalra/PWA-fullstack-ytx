@@ -3,7 +3,7 @@ import AvatarDemo from "./Components/Avatar";
 import { PopoverDemo } from "./Components/Popover";
 
 function Users({ data }) {
-  console.log("users=", data);
+  // console.log("users=", data);
 
   return (
     <div className="border-2 rounded-lg w-full ">

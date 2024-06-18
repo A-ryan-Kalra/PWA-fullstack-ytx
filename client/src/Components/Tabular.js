@@ -41,7 +41,7 @@ export default function TableDemo({
     }
   }, []);
 
-  console.log("userData", userData);
+  // console.log("userData", userData);
   const getUsers = async () => {
     try {
       const res = await fetch("/api/user/getusers");
