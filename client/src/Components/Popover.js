@@ -23,17 +23,29 @@ export const updateNotification = atom(false);
 
 export function PopoverDemo({ profilePicture, name, endpoint }) {
   const [notificationAtom, setNotificationAtom] = useAtom(allowNotification);
-
+  const [userData, setUserData] = useState();
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
   //   const [notification, setNotifications] = useState();
   const now = new Date();
   const formattedDate = format(now, "yyyy-MM-dd hh:mm a");
+
   const [details, setDetails] = useState({
     title: "",
     body: "",
     createdAt: formattedDate || "",
   });
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("userData"));
+    if (!data.username) {
+      toast.error("Username does not exit please try to login again!");
+      navigate("/");
+    } else {
+      setUserData(data);
+    }
+  }, []);
+
   const { notificationRequest, data } = RequestPermission();
   const [subscription, setSubscription] = useState(null);
   console.log("endpoint=", endpoint);
@@ -45,7 +57,12 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ details, endpoint }),
+        body: JSON.stringify({
+          details,
+          endpoint,
+          receiver: name,
+          sender: (userData && userData.username) || "unknown",
+        }),
       });
       const data = await res.json();
       console.log(data);
@@ -92,14 +109,12 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
         <PopoverContent className="z-[1000] w-80">
           <div className="grid gap-4">
             <div className="space-y-2">
-              <h4 className="font-medium leading-none">Notification</h4>
-              <p className="text-sm text-muted-foreground">
-                Enter the Notification
-              </p>
+              <h4 className="font-medium leading-none">{name}</h4>
+              <p className="text-sm text-muted-foreground">Send Message</p>
             </div>
             <div className="grid gap-2">
               <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="width">Title</Label>
+                <Label htmlFor="title">Title</Label>
                 <Input
                   onChange={(e) =>
                     setDetails((prev) => ({
@@ -114,7 +129,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
                 />
               </div>
               <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="maxWidth">Body</Label>
+                <Label htmlFor="body">Body</Label>
                 <Input
                   id="body"
                   onChange={(e) =>

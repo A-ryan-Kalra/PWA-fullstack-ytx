@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: String,
   },
+  receiver: {
+    type: String,
+  },
+  sender: {
+    type: String,
+  },
   // isAdmin: {
   //   type: Boolean,
   //   default: false,

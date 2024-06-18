@@ -3,17 +3,23 @@ import { allowNotification } from "./data";
 import { getSubscription } from "../getSubscription";
 import { useEffect, useState } from "react";
 import { setDate } from "date-fns";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 // import kl from "../../public/serviceworker";
 function RequestPermission() {
   const [notificationAtom, setNotificationAtom] = useAtom(allowNotification);
   const [userData, setUserData] = useState();
-  const [subscription, setSubscription] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData"));
-
-    setUserData(data);
+    if (!data.username) {
+      toast.error("Username does not exit please try to login again!");
+      navigate("/");
+    } else {
+      setUserData(data);
+    }
   }, []);
 
   const checkPermission = () => {
@@ -33,14 +39,12 @@ function RequestPermission() {
     const registration = await navigator.serviceWorker.register(
       "./serviceworker.js"
     );
-    //   console.log("Register ", registration);
     return registration;
   };
 
   const requestNotficationPermission = async () => {
     try {
       const permission = await Notification.requestPermission();
-      // console.log("permission=", permission);
       setNotificationAtom(permission === "granted");
       if (permission !== "granted") {
         throw new Error("Notification permission not granted");
@@ -50,24 +54,24 @@ function RequestPermission() {
     }
   };
   const fetchSubscription = async () => {
-    console.log("Triggered");
     const sub = await getSubscription();
-    var uploadedData = { username: userData.username || "" };
-    uploadedData.endpoint = sub;
-    console.log("uploadedData", uploadedData);
-    console.log("sub=", sub);
+    try {
+      var uploadedData = { username: (userData && userData.username) || "" };
+      uploadedData.endpoint = sub;
 
-    // Send subscription to the backend server
+      // Send subscription to the backend server
 
-    const res = await fetch("/api/user/save-subscription", {
-      method: "PUT",
-      body: JSON.stringify(uploadedData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    console.log("sub data=", data);
+      const res = await fetch("/api/user/save-subscription", {
+        method: "PUT",
+        body: JSON.stringify(uploadedData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+    } catch (error) {
+      console.error("Failure ", error);
+    }
 
     return sub;
   };

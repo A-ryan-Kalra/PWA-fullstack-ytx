@@ -19,6 +19,7 @@ import {
   User,
 } from "lucide-react";
 import Users from "../Users";
+import { useNavigate } from "react-router-dom";
 
 export default function TableDemo({
   notification,
@@ -26,6 +27,20 @@ export default function TableDemo({
   updateNotificationAtom,
 }) {
   const [users, setUsers] = useState();
+  const [userData, setUserData] = useState();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("userData"));
+    if (!data.username) {
+      toast.error("Username does not exit please try to login again!");
+      navigate("/");
+    } else {
+      setUserData(data);
+    }
+  }, []);
+
+  console.log("userData", userData);
   const getUsers = async () => {
     try {
       const res = await fetch("/api/user/getusers");
@@ -60,6 +75,9 @@ export default function TableDemo({
           <div className="flex items-center justify-between">
             <BreadcrumbDemo />
             {/* <PopoverDemo /> */}
+            <h1 className="font-mono">
+              Hello,{(userData && userData.username) || "Admin"}{" "}
+            </h1>
           </div>
 
           <Users data={users} />
@@ -67,16 +85,20 @@ export default function TableDemo({
           <div className=" w-[1320px]  mx-auto max-h-[600px] overflow-y-auto border-2 rounded-lg border-gray-200 shadow-lg p-3">
             <h1 className="font-semibold">Notifications</h1>
             <p className="text-[15px] text-neutral-600">
-              A list of notifications made by Admin.
+              A list of notifications made by Admins.
             </p>
             <Table className=" my-4">
               {/* <TableCaption>A list of recent notification.</TableCaption> */}
               <TableHeader>
                 <TableRow>
                   <TableHead className=" w-[100px] ">Id</TableHead>
-                  <TableHead className=" w-[200px] text-left">Title</TableHead>
-                  <TableHead className=" w-[200px] text-left">
+                  <TableHead className=" w-[100px] text-left">Title</TableHead>
+                  <TableHead className=" w-[100px] text-left">
                     Message
+                  </TableHead>
+                  <TableHead className=" w-[100px] text-left">Sender</TableHead>
+                  <TableHead className=" w-[100px] text-left">
+                    Receiver
                   </TableHead>
                   <TableHead className=" w-[100px] text-left">
                     CreatedAt
@@ -92,6 +114,12 @@ export default function TableDemo({
                     </TableCell>
                     <TableCell className=" text-left">{invoice.body}</TableCell>
                     <TableCell className=" text-left">
+                      {invoice.sender}
+                    </TableCell>
+                    <TableCell className=" text-left">
+                      {invoice.receiver}
+                    </TableCell>
+                    <TableCell className=" text-left">
                       <span className="border-2 p-1.5 rounded-md">
                         {invoice.createdAt}
                       </span>
@@ -102,9 +130,9 @@ export default function TableDemo({
               <TableFooter>
                 <TableRow>
                   <TableCell colSpan={3}>Total</TableCell>
-                  <TableCell className="text-left">
-                    {notification?.details?.length}
-                  </TableCell>
+                  {/* <TableCell className="text-left">
+                    {notification?.details?.length || "0"}
+                  </TableCell> */}
                 </TableRow>
               </TableFooter>
             </Table>

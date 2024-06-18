@@ -36,29 +36,21 @@ export const saveEndpoint = async (req, res) => {
 };
 
 export const saveDetails = async (req, res) => {
-  const { details, endpoint } = req.body;
+  const { details, endpoint, receiver, sender } = req.body;
 
   try {
     console.log("THis time is different= ", req.body);
-    // const allEndpoints = await User.find();
 
-    // console.log("arr= ", allEndpoints);
-    // console.log(
-    //   "allEndpoints =",
-    //   allEndpoints[allEndpoints.length - 1].endpoint
-    // );
-    // const data = allEndpoints[allEndpoints.length - 1].endpoint;
-    // console.log("Data= ", data[data.length - 1]);
-    // console.log("allEndpoints[0]._id,", allEndpoints[0]._id);
     const newDetails = new Detail({
       title: details.title,
       body: details.body,
       createdAt: details.createdAt,
+      receiver,
+      sender,
     });
     await newDetails.save();
     console.log("newDetails wow=", newDetails);
 
-    // webPush.sendNotification(data[data.length - 1], JSON.stringify(req.body));
     webPush.sendNotification(endpoint[0], JSON.stringify(details));
     res.status(200).json(newDetails);
   } catch (error) {
@@ -69,7 +61,7 @@ export const saveDetails = async (req, res) => {
 export const getDetails = async (req, res) => {
   try {
     const getDetails = await Detail.find();
-    // console.log("Details Found=", getDetails);
+
     res.status(200).json(getDetails);
   } catch (error) {
     console.error(error);

@@ -20,7 +20,7 @@ import { atom, useAtom } from "jotai";
 import { updateNotification } from "./Popover";
 
 export const showDashboard = atom(false);
-export default function TabsDemo() {
+export default function TabsDemo({}) {
   const [user, setUser] = useState();
   const [details, setDetails] = useState({
     username: "",
@@ -31,6 +31,7 @@ export default function TabsDemo() {
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
   const handleRegister = async () => {
+    show(() => setShow((prev) => !prev));
     try {
       const res = await fetch("/api/user/register", {
         method: "POST",
