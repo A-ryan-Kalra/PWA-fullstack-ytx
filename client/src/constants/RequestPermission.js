@@ -8,13 +8,14 @@ import { setDate } from "date-fns";
 function RequestPermission() {
   const [notificationAtom, setNotificationAtom] = useAtom(allowNotification);
   const [userData, setUserData] = useState();
+  const [subscription, setSubscription] = useState();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData"));
+
     setUserData(data);
   }, []);
 
-  // console.log("UserData", userData);
   const checkPermission = () => {
     try {
       if (!"serviceWorker" in navigator) {
@@ -51,18 +52,26 @@ function RequestPermission() {
   const fetchSubscription = async () => {
     console.log("Triggered");
     const sub = await getSubscription();
-    var uploadedData = { username: userData.username };
+    var uploadedData = { username: userData.username || "" };
     uploadedData.endpoint = sub;
     console.log("uploadedData", uploadedData);
-    // Send subscription to the backend server
-    await fetch("http://localhost:5000/api/user/save-subscription", {
-      method: "PUT",
-      body: JSON.stringify(uploadedData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
     console.log("sub=", sub);
+
+    // Send subscription to the backend server
+
+    const res = await fetch(
+      "http://localhost:5000/api/user/save-subscription",
+      {
+        method: "PUT",
+        body: JSON.stringify(uploadedData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+    console.log("sub data=", data);
+
     return sub;
   };
   const notificationRequest = async () => {

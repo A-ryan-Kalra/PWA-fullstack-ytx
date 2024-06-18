@@ -21,8 +21,9 @@ import {
 import { getSubscription } from "../getSubscription";
 export const updateNotification = atom(false);
 
-export function PopoverDemo({ profilePicture, name }) {
+export function PopoverDemo({ profilePicture, name, endpoint }) {
   const [notificationAtom, setNotificationAtom] = useAtom(allowNotification);
+
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
   //   const [notification, setNotifications] = useState();
@@ -35,6 +36,7 @@ export function PopoverDemo({ profilePicture, name }) {
   });
   const { notificationRequest, data } = RequestPermission();
   const [subscription, setSubscription] = useState(null);
+  console.log("endpoint=", endpoint);
 
   const storeDetails = async () => {
     try {
@@ -43,7 +45,7 @@ export function PopoverDemo({ profilePicture, name }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(details),
+        body: JSON.stringify({ details, endpoint }),
       });
       const data = await res.json();
       console.log(data);
