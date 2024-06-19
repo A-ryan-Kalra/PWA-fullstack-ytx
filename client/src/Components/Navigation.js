@@ -4,11 +4,12 @@ import Tabs, { showDashboard } from "./Tabs";
 import TabsDemo from "./Tabs";
 import { Button } from "./ui/button";
 import { useAtom } from "jotai";
+import Authentication from "./Authentication";
 
 function Navigation() {
   const [show, setShow] = useState(false);
   const ref = useRef();
-
+  const [state, setState] = useState(false);
   const [dashboardAtom, setDashboardAtom] = useAtom(showDashboard);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ function Navigation() {
             </Button>
             <div className="absolute  top-10 right-[30%] 2xl:-right-full ">
               {show && <TabsDemo />}
+              {/* {show && <Authentication />} */}
             </div>
           </div>
         </div>

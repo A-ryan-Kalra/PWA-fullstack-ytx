@@ -62,7 +62,9 @@ function RequestPermission() {
   const fetchSubscription = async () => {
     const sub = await getSubscription();
     try {
-      var uploadedData = { username: (userData && userData.username) || "" };
+      var uploadedData = {
+        username: (userData && userData.username) || "unknown",
+      };
       uploadedData.endpoint = sub;
 
       // Send subscription to the backend server

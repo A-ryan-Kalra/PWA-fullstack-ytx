@@ -46,7 +46,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
       toast.error("Username does not exit please try to login again!");
       navigate("/");
     } else {
-      setUserData(data);
+      setUserData(currentUser);
     }
   }, []);
 
