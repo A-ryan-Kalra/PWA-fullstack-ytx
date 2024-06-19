@@ -47,6 +47,7 @@ function RequestPermission() {
       const permission = await Notification.requestPermission();
       setNotificationAtom(permission === "granted");
       if (permission !== "granted") {
+        toast.error("Notification permission not granted");
         throw new Error("Notification permission not granted");
       }
     } catch (error) {

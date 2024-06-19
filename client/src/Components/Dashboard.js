@@ -12,7 +12,7 @@ function Dashboard() {
     try {
       const res = await fetch("/api/user/get-notification");
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setNotifications(data);
     } catch (error) {
       console.error("Something went wrong ", error);
