@@ -5,23 +5,28 @@ import { useEffect, useState } from "react";
 import { setDate } from "date-fns";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { updateNotification } from "../Components/Popover";
+import { useSelector } from "react-redux";
 
 // import kl from "../../public/serviceworker";
 function RequestPermission() {
   const [notificationAtom, setNotificationAtom] = useAtom(allowNotification);
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
+  const [updateNotificationAtom, setUpdateNotificationAtom] =
+    useAtom(updateNotification);
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("userData"));
-    if (!data.username) {
+    if (!currentUser.username) {
       toast.error("Username does not exit please try to login again!");
       navigate("/");
     } else {
-      setUserData(data);
+      setUserData(currentUser);
     }
   }, []);
 
+  // console.log("updateNotificationAtom", updateNotificationAtom);
   const checkPermission = () => {
     try {
       if (!"serviceWorker" in navigator) {
@@ -62,26 +67,28 @@ function RequestPermission() {
 
       // Send subscription to the backend server
 
-      const res = await fetch("/api/user/save-subscription", {
-        method: "PUT",
-        body: JSON.stringify(uploadedData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/user/save-subscription",
+        {
+          method: "PUT",
+          body: JSON.stringify(uploadedData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await res.json();
+      setUpdateNotificationAtom((prev) => !prev);
     } catch (error) {
       console.error("Failure ", error);
     }
-
-    return sub;
   };
   const notificationRequest = async () => {
     checkPermission();
     await requestNotficationPermission();
     await registerSW();
     const kl = await registerSW();
-    const data = fetchSubscription();
+    fetchSubscription();
     // kl.showNotification("Chal bhai", {
     //   body: "Nice come back",
     // });

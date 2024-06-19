@@ -21,6 +21,7 @@ import {
 import { getSubscription } from "../getSubscription";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 export const updateNotification = atom(false);
 
 export function PopoverDemo({ profilePicture, name, endpoint }) {
@@ -32,6 +33,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   //   const [notification, setNotifications] = useState();
   const now = new Date();
   const formattedDate = format(now, "yyyy-MM-dd hh:mm a");
+  const { currentUser } = useSelector((state) => state.user);
 
   const [details, setDetails] = useState({
     title: "",
@@ -40,8 +42,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   });
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("userData"));
-    if (!data.username) {
+    if (!currentUser.username) {
       toast.error("Username does not exit please try to login again!");
       navigate("/");
     } else {
@@ -53,7 +54,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
 
   const storeDetails = async () => {
     try {
-      const res = await fetch("/api/user/save-details", {
+      const res = await fetch("http://localhost:5000/api/user/save-details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
         }),
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setDetails({
         body: "",
         title: "",

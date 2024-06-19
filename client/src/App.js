@@ -6,6 +6,7 @@ import Dashboard from "./Components/Dashboard";
 import Footer from "./Components/Footer";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 function App() {
   return (

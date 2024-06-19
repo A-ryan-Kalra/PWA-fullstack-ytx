@@ -18,6 +18,8 @@ import {
 } from "../Components/ui/tabs";
 import { atom, useAtom } from "jotai";
 import { updateNotification } from "./Popover";
+import { useDispatch } from "react-redux";
+import { signInSuccess } from "../redux/user/userSlice";
 
 export const showDashboard = atom(false);
 export default function TabsDemo({}) {
@@ -30,9 +32,10 @@ export default function TabsDemo({}) {
   const [errorWarn, setErrorWarn] = useState("");
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
+  const dispatch = useDispatch();
   const handleRegister = async () => {
     try {
-      const res = await fetch("/api/user/register", {
+      const res = await fetch("http://localhost:5000/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +50,8 @@ export default function TabsDemo({}) {
         setUser(data);
         setDashboardAtom(data.isAdmin);
         localStorage.setItem("isAdmin", JSON.stringify(data.isAdmin));
-        localStorage.setItem("userData", JSON.stringify(data));
+        dispatch(signInSuccess(data));
+        // localStorage.setItem("userData", JSON.stringify(data));
         setErrorWarn("");
       }
 
@@ -63,7 +67,7 @@ export default function TabsDemo({}) {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("/api/user/login", {
+      const res = await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,8 +82,8 @@ export default function TabsDemo({}) {
         setUser(data);
         setDashboardAtom(data.isAdmin);
         localStorage.setItem("isAdmin", JSON.stringify(data.isAdmin));
-        localStorage.setItem("userData", JSON.stringify(data));
-
+        // localStorage.setItem("userData", JSON.stringify(data));
+        dispatch(signInSuccess(data));
         setErrorWarn("");
       }
       setDetails({

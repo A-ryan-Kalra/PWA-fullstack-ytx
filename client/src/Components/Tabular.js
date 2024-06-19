@@ -21,6 +21,7 @@ import {
 import Users from "../Users";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 export default function TableDemo({
   notification,
@@ -30,21 +31,21 @@ export default function TableDemo({
   const [users, setUsers] = useState();
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
-
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData"));
-    if (!data.username) {
+    if (!currentUser.username) {
       toast.error("Username does not exit please try to login again!");
       navigate("/");
     } else {
-      setUserData(data);
+      setUserData(currentUser);
     }
   }, []);
 
-  // console.log("userData", userData);
+  // console.log("user ", users);
   const getUsers = async () => {
     try {
-      const res = await fetch("/api/user/getusers");
+      const res = await fetch("http://localhost:5000/api/user/getusers");
       const data = await res.json();
       // setUpdateNotificationAtom((prev) => !prev);
       // console.log(data);
