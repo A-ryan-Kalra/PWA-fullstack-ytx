@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../Components/ui/card";
-import { Input } from "../Components/ui/input";
 import { Label } from "../Components/ui/label";
 import {
   Tabs,
@@ -20,6 +19,7 @@ import { atom, useAtom } from "jotai";
 import { updateNotification } from "./Popover";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
+import Input from "./Input";
 
 export const showDashboard = atom(false);
 export default function TabsDemo({}) {
@@ -33,6 +33,7 @@ export default function TabsDemo({}) {
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
   const dispatch = useDispatch();
+  const [passwordShow, setPasswordShow] = useState(false);
   const handleRegister = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/user/register", {
@@ -98,12 +99,12 @@ export default function TabsDemo({}) {
 
   // console.log("user", user);
   return (
-    <Tabs defaultValue="account" className="w-[300px] md:w-[400px]">
+    <Tabs defaultValue="register" className="w-[300px] md:w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="account">Register</TabsTrigger>
-        <TabsTrigger value="password">Login</TabsTrigger>
+        <TabsTrigger value="register">Register</TabsTrigger>
+        <TabsTrigger value="login">Login</TabsTrigger>
       </TabsList>
-      <TabsContent value="account">
+      <TabsContent value="register">
         <Card>
           <CardHeader>
             <CardTitle>Register</CardTitle>
@@ -111,9 +112,10 @@ export default function TabsDemo({}) {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
               <Input
+                label="username"
                 id="username"
+                type={"text"}
                 value={details.username}
                 onChange={(e) =>
                   setDetails((prev) => ({
@@ -124,10 +126,10 @@ export default function TabsDemo({}) {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
+                label={"password"}
                 value={details.password}
                 onChange={(e) =>
                   setDetails((prev) => ({
@@ -145,7 +147,7 @@ export default function TabsDemo({}) {
           </CardFooter>
         </Card>
       </TabsContent>
-      <TabsContent value="password">
+      <TabsContent value="login">
         <Card>
           <CardHeader>
             <CardTitle>Login</CardTitle>
@@ -153,9 +155,10 @@ export default function TabsDemo({}) {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
               <Input
+                label="username"
                 id="username"
+                type={"text"}
                 value={details.username}
                 onChange={(e) =>
                   setDetails((prev) => ({
@@ -166,11 +169,11 @@ export default function TabsDemo({}) {
               />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                value={details.password}
                 type="password"
+                label={"password"}
+                value={details.password}
                 onChange={(e) =>
                   setDetails((prev) => ({
                     ...prev,

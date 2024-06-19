@@ -1,16 +1,42 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Tabs, { showDashboard } from "./Tabs";
 import TabsDemo from "./Tabs";
 import { Button } from "./ui/button";
 import { useAtom } from "jotai";
 import Authentication from "./Authentication";
+import Adjustbar from "./Adjustbar";
+import { style, style1 } from "../constants/data";
 
 function Navigation() {
   const [show, setShow] = useState(false);
   const ref = useRef();
   const [state, setState] = useState(false);
   const [dashboardAtom, setDashboardAtom] = useAtom(showDashboard);
+  const location = useLocation();
+  const [count, setCount] = useState(0);
+  const [check, setCheck] = useState("");
+  // const urlParams = new URLSearchParams(location.search);
+  console.log(count);
+
+  useEffect(() => {
+    setCheck(location.pathname);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 60) {
+        setState(true);
+        setTimeout(() => {
+          setCount(count + 1);
+        }, 200);
+      } else {
+        setState(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [state]);
 
   useEffect(() => {
     const closeDropDown = (e) => {
@@ -30,34 +56,47 @@ function Navigation() {
   }, [dashboardAtom]);
 
   return (
-    <nav className="bg-fuchsia-300 shadow-md sticky top-0 z-[100]">
+    <nav
+      // className="bg-fuchsia-300 shadow-md sticky top-0 z-[100]"
+      className={`${
+        state ? "-translate-y-12 md:-translate-y-11 " : ""
+      }  z-[100] shadow-md border-2  sticky top-0 bg-white duration-300  `}
+    >
+      <Adjustbar count={count} />
       <div className="flex justify-between items-center max-md:p-2 md:max-w-[1320px] mx-auto">
-        <h1 className="text-[15px] md:text-[20px] shadow-lg p-2 font-bold  border-2  rounded-md duration-200 text-white bg-cyan-500 border-lime-400 cursor-default">
+        <h1 className="text-[15px] md:text-[20px]  p-2 font-bold my-1 border-2  rounded-md duration-200 text-white bg-black cursor-default">
           WebApp
         </h1>
-        <div className="flex  items-center p-4  md:gap-10 ">
+        <div className="flex  items-center p-2  md:gap-10 ">
           <Link
             to={"/"}
-            className="text-[15px] md:text-[20px] hover:text-black  hover:shadow-lg font-semibold p-2 hover:border-1 border-2 border-transparent hover:rounded-md duration-200 hover:border-black"
+            className={`${
+              check === "/" ? style1 : style
+            } text-[15px] md:text-[20px]  font-semibold  `}
           >
             Home
           </Link>
           {dashboardAtom && (
             <Link
               to={"/dashboard"}
-              className="text-[15px] md:text-[20px] hover:text-black hover:shadow-lg font-semibold p-2 hover:border-1 border-2 border-transparent hover:rounded-md duration-200 hover:border-black"
+              className={`${
+                check === "/dashboard" ? style1 : style
+              } text-[15px] md:text-[20px]  font-semibold`}
             >
               Dashboard
             </Link>
           )}
 
           <div className="relative" ref={ref} onClick={() => setShow(true)}>
-            <Button
-              className="text-[15px] bg-transparent shadow-none hover:bg-transparent md:text-[20px] hover:text-black hover:shadow-lg font-semibold  hover:border-1 border-2 border-transparent hover:rounded-md duration-200 hover:border-black"
+            <button
+              className={`${
+                check === "settings" ? style1 : style
+              } text-[15px] md:text-[20px]  font-semibold  `}
               variant="outline"
+              onClick={() => setCheck("settings")}
             >
               Settings
-            </Button>
+            </button>
             <div className="absolute  top-10 right-[30%] 2xl:-right-full ">
               {show && <TabsDemo />}
               {/* {show && <Authentication />} */}
