@@ -15,7 +15,7 @@
 > [!NOTE]
 >
 > <ul>
-> <li>Admin Dashboard is only accessible to authorized users.However, User has to register an account in order to create a listing of their property.</li>
+> <li>Admin Dashboard is only accessible to authorized users.However, User has to register an account in order to send notifications.</li>
 > <li>The project also includes a PWA extension, allowing you to easily access this website on your phone and have the same experience as when using the regular app.</li>
 > <li>Feel free to visit.</li>
 
