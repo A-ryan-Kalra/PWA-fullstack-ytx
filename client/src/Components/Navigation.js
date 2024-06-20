@@ -74,7 +74,11 @@ function Navigation() {
     >
       <Adjustbar count={count} />
       <div className="flex justify-between items-center max-md:p-2 md:max-w-[1320px] mx-auto">
-        <h1 className="text-[15px] md:text-[20px]  p-2 font-bold my-1 border-2  rounded-md duration-200 text-white bg-black cursor-default">
+        <h1
+          className={`text-[15px] md:text-[20px] duration-700 p-2 font-bold my-1 border-2  rounded-md   text-white bg-black cursor-default ${
+            state ? "scale-105 duration-700" : "scale-90 duration-700"
+          }`}
+        >
           WebApp
         </h1>
         <div className="flex  items-center p-2  md:gap-10 ">

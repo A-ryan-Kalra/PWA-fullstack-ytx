@@ -29,8 +29,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   const [userData, setUserData] = useState();
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
-  const navigate = useNavigate();
-  console.log("Endpoint=", endpoint);
+
   //   const [notification, setNotifications] = useState();
   const now = new Date();
   const formattedDate = format(now, "yyyy-MM-dd hh:mm a");

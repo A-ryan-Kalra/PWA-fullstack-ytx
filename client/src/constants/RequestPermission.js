@@ -91,6 +91,7 @@ function RequestPermission() {
     await registerSW();
     const kl = await registerSW();
     fetchSubscription();
+
     // kl.showNotification("Chal bhai", {
     //   body: "Nice come back",
     // });
