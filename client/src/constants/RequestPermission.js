@@ -73,7 +73,7 @@ function RequestPermission() {
 
         setUpdateNotificationAtom((prev) => !prev);
         toast.error(
-          "Notifications are blocked. Please enable notifications in your browser settings"
+          "Notifications are blocked. Please enable notifications in your browser settings or reset permissions"
         );
         throw new Error("Notification permission not granted");
       }

@@ -69,7 +69,7 @@ function Home() {
           <h1 className="text-[25px] bg-white  text-center font-mono">
             Generate a post
           </h1>
-          <SearchSideBar triggerChange={triggerChange} />
+          {/* <SearchSideBar triggerChange={triggerChange} /> */}
         </div>
 
         <div className="flex-col flex">

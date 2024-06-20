@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <div className={` relative top-10 `}>
+    <div className={`max-sm:mb-[75px] relative top-10 `}>
       <div
         className={` flex relative justify-around items-center  duration-300  py-3 border-t-2 border-black`}
       >

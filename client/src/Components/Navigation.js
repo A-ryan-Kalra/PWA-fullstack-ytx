@@ -62,7 +62,6 @@ function Navigation() {
   }, [dashboardAtom]);
 
   function turnOffSettings() {
-    console.log("Wut");
     setShow(false);
   }
   return (
@@ -81,7 +80,7 @@ function Navigation() {
         >
           WebApp
         </h1>
-        <div className="flex  items-center p-2  md:gap-10 ">
+        <div className="flex  items-center p-2  md:gap-10 max-sm:hidden">
           <Link
             to={"/"}
             className={`${
@@ -105,14 +104,19 @@ function Navigation() {
           <div
             className="relative flex p-[4px] hover:bg-[#dddde4]  duration-200 rounded-full"
             ref={ref}
-            onClick={() => setShow(true)}
+            onClick={() => setShow(!show)}
           >
             <button>
               <UserCircle className="outline-none" />
             </button>
-            <div className="absolute bg-white top-10 right-[30%] 2xl:-right-full ">
-              {show && <TabsDemo turnOffSettings={turnOffSettings} />}
-            </div>
+            {show && (
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="absolute bg-white top-10 right-[30%] 2xl:-right-full "
+              >
+                <TabsDemo turnOffSettings={turnOffSettings} />
+              </div>
+            )}
           </div>
         </div>
       </div>

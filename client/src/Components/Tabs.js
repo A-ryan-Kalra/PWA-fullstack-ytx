@@ -47,6 +47,10 @@ export default function TabsDemo({ turnOffSettings }) {
   // console.log(details);
 
   const handleRegister = async () => {
+    if (!details.password.trim() || !details.username.trim()) {
+      setErrorWarn("Enter credentials to register");
+      return;
+    }
     try {
       const res = await fetch("http://localhost:5000/api/user/register", {
         method: "POST",
@@ -82,6 +86,10 @@ export default function TabsDemo({ turnOffSettings }) {
 
   const handleLogin = async () => {
     try {
+      if (!details.password.trim() || !details.username.trim()) {
+        setErrorWarn("Enter credentials to login");
+        return;
+      }
       const res = await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
         headers: {
