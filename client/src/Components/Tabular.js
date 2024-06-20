@@ -42,7 +42,7 @@ export default function TableDemo({
   // console.log("user ", users);
   const getUsers = async () => {
     try {
-      const res = await fetch("/api/user/getusers");
+      const res = await fetch("http://localhost:5000/api/user/getusers");
       const data = await res.json();
       // setUpdateNotificationAtom((prev) => !prev);
       // console.log(data);

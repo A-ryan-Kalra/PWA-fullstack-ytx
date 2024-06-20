@@ -59,13 +59,16 @@ function RequestPermission() {
 
         // Send subscription to the backend server
 
-        const res = await fetch("/api/user/save-subscription", {
-          method: "PUT",
-          body: JSON.stringify(uploadedData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const res = await fetch(
+          "http://localhost:5000/api/user/save-subscription",
+          {
+            method: "PUT",
+            body: JSON.stringify(uploadedData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const data = await res.json();
 
         setUpdateNotificationAtom((prev) => !prev);
@@ -88,13 +91,16 @@ function RequestPermission() {
 
       // Send subscription to the backend server
 
-      const res = await fetch("/api/user/save-subscription", {
-        method: "PUT",
-        body: JSON.stringify(uploadedData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/user/save-subscription",
+        {
+          method: "PUT",
+          body: JSON.stringify(uploadedData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await res.json();
       setUpdateNotificationAtom((prev) => !prev);
     } catch (error) {

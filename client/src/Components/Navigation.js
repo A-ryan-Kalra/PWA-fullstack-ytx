@@ -97,14 +97,15 @@ function Navigation() {
     >
       <Adjustbar count={count} />
       <div className="flex justify-between items-center max-md:p-2 md:max-w-[1320px] mx-auto">
-        <h1
-          className={`text-[15px] md:text-[20px] duration-700 p-2 font-bold my-1 border-2  rounded-md   text-white bg-black cursor-default ${
+        <Link
+          to={"/"}
+          className={` text-[15px] md:text-[20px] duration-700 p-2 font-bold my-1 border-2  rounded-md   text-white bg-black ${
             state ? "scale-105 duration-700" : "scale-90 duration-700"
           }`}
         >
           WebApp
-        </h1>
-        <div className="flex  items-center p-2  md:gap-10 max-sm:hidden">
+        </Link>
+        <div className="flex justify-center items-center gap-5 p-2  md:gap-10 max-sm:hidden">
           <Link
             to={"/"}
             className={`${
@@ -146,7 +147,7 @@ function Navigation() {
 
         <button
           onClick={handle}
-          className="flex flex-col lg:hidden duration-200 z-[100] justify-center items-center"
+          className="flex flex-col sm:hidden duration-200 z-[100] justify-center items-center"
         >
           <span
             className={`bg-black duration-200 transition-all block h-0.5 w-6 rounded-sm  ${

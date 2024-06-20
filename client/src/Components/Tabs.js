@@ -52,7 +52,7 @@ export default function TabsDemo({ turnOffSettings }) {
       return;
     }
     try {
-      const res = await fetch("/api/user/register", {
+      const res = await fetch("http://localhost:5000/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +90,7 @@ export default function TabsDemo({ turnOffSettings }) {
         setErrorWarn("Enter credentials to login");
         return;
       }
-      const res = await fetch("/api/user/login", {
+      const res = await fetch("http://localhost:5000/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -125,6 +125,7 @@ export default function TabsDemo({ turnOffSettings }) {
   function handleLogout() {
     navigate("/");
     toast.success("Successfully logged out");
+    turnOffSettings();
     dispatch(signOut());
   }
 

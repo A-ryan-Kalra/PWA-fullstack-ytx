@@ -41,6 +41,12 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   });
 
   useEffect(() => {
+    if (window.innerWidth > 1300) {
+      setResize(true);
+      // alert("okay");
+    } else {
+      setResize(false);
+    }
     const horizontal = () => {
       if (window.innerWidth > 1300) {
         setResize(true);
@@ -66,7 +72,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
 
   const storeDetails = async () => {
     try {
-      const res = await fetch("/api/user/save-details", {
+      const res = await fetch("http://localhost:5000/api/user/save-details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

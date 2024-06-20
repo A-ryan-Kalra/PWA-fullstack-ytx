@@ -1,8 +1,8 @@
 import { HomeIcon, LayoutDashboardIcon, UserCircle } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
-import { style, style1, styleWhite } from "../constants/data";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { style, style1, style1White, styleWhite } from "../constants/data";
 import TabsDemo, { showDashboard } from "./Tabs";
 import { useAtom } from "jotai";
 
@@ -13,14 +13,18 @@ function BottomNavigationBar() {
   const [show, setShow] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const [dashboardAtom, setDashboardAtom] = useAtom(showDashboard);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setCheck(location.pathname);
+    const timer = setTimeout(() => {
+      setCheck(location.pathname);
+    }, 100);
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 
+  // console.log("check", check);
   useEffect(() => {
     const res = JSON.parse(localStorage.getItem("isAdmin"));
-
     setDashboardAtom(res);
   }, [dashboardAtom]);
 
@@ -46,25 +50,29 @@ function BottomNavigationBar() {
 
   return (
     <div className="fixed z-[100] sm:hidden w-full flex justify-around items-center text-white bg-black bottom-0">
-      <Link
-        onClick={() => setCheck("/")}
-        to={"/"}
+      <div
+        onClick={() => {
+          navigate("/");
+          setCheck("/");
+        }}
         className={`duration-300 ${
           check === "/" && "bg-white/30"
         } p-2  rounded-full overflow-hidden`}
       >
         <HomeIcon className="" />
-      </Link>
+      </div>
       {currentUser && (
-        <Link
-          onClick={() => setCheck("/dashboard")}
-          to={"/dashboard"}
+        <div
+          onClick={() => {
+            navigate("/dashboard");
+            setCheck("/dashboard");
+          }}
           className={`duration-300 ${
             check === "/dashboard" && "bg-white/30"
           } p-2  rounded-full overflow-hidden`}
         >
           <LayoutDashboardIcon className="" />
-        </Link>
+        </div>
       )}
       <div
         ref={ref}
@@ -73,7 +81,7 @@ function BottomNavigationBar() {
           setShow(!show);
         }}
         className={`p-2  relative rounded-full ${
-          check === "setting" ? styleWhite : ""
+          check === "setting" ? style1White : ""
         } `}
       >
         <UserCircle className="" />

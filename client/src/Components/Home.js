@@ -110,10 +110,10 @@ function Home() {
         </div>
       </div>
       {product && (
-        <div className="w-full flex items-center justify-center my-10">
+        <div className="w-full flex max-sm:text-[10px] duration-300 items-center justify-center my-10">
           {page > 1 && (
             <span
-              className="cursor-pointer border-2 rounded-md p-2 hover:bg-indigo-400"
+              className="cursor-pointer border-2 rounded-md p-2 hover:bg-gray-300"
               onClick={() => handlePage(page - 1)}
             >
               Previous
@@ -123,10 +123,10 @@ function Home() {
             <span
               key={i}
               onClick={() => handlePage(i + 1)}
-              className={`p-2 ${
+              className={`py-2 px-3 ${
                 i + 1 === page
-                  ? "hover:opacity-70 cursor-pointer border-2 rounded-md border-gray-300"
-                  : "hover:bg-blue-400 cursor-pointer rounded-md"
+                  ? "hover:opacity-70 cursor-pointer border-2 rounded-full bg-gray-300 border-gray-400"
+                  : "hover:bg-emerald-300 cursor-pointer rounded-full"
               }`}
               index={i}
             >
