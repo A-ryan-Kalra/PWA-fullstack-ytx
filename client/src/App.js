@@ -6,6 +6,7 @@ import Dashboard from "./Components/Dashboard";
 import Footer from "./Components/Footer";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import BottomNavigationBar from "./Components/BottomNavigationBar";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
-
+      <BottomNavigationBar />
       <Footer />
     </div>
   );

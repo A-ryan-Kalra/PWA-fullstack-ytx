@@ -52,7 +52,29 @@ function RequestPermission() {
       const permission = await Notification.requestPermission();
       setNotificationAtom(permission === "granted");
       if (permission !== "granted") {
-        toast.error("Notification permission not granted");
+        var uploadedData = {
+          username: (userData && userData.username) || "unknown",
+        };
+        uploadedData.endpoint = [];
+
+        // Send subscription to the backend server
+
+        const res = await fetch(
+          "http://localhost:5000/api/user/save-subscription",
+          {
+            method: "PUT",
+            body: JSON.stringify(uploadedData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await res.json();
+
+        setUpdateNotificationAtom((prev) => !prev);
+        toast.error(
+          "Notifications are blocked. Please enable notifications in your browser settings"
+        );
         throw new Error("Notification permission not granted");
       }
     } catch (error) {

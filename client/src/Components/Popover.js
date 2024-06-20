@@ -29,17 +29,29 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   const [userData, setUserData] = useState();
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
-
+  const [resize, setResize] = useState(false);
   //   const [notification, setNotifications] = useState();
   const now = new Date();
   const formattedDate = format(now, "yyyy-MM-dd hh:mm a");
   const { currentUser } = useSelector((state) => state.user);
-
   const [details, setDetails] = useState({
     title: "",
     body: "",
     createdAt: formattedDate || "",
   });
+
+  useEffect(() => {
+    const horizontal = () => {
+      if (window.innerWidth > 1300) {
+        setResize(true);
+        // alert("okay");
+      } else {
+        setResize(false);
+      }
+    };
+    window.addEventListener("resize", horizontal);
+    return () => window.removeEventListener("resize", horizontal);
+  }, []);
 
   useEffect(() => {
     if (!currentUser?.username) {
@@ -103,15 +115,16 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
                       size={18}
                       className=" text-green-700 group-hover:text-white rounded-full"
                     />
-
-                    <TooltipContent
-                      className="bg-black border-black border-2 font-semibold"
-                      side="right"
-                    >
-                      <p className=" text-white">
-                        {name} is subscribed to recieve notifications
-                      </p>
-                    </TooltipContent>
+                    {resize && (
+                      <TooltipContent
+                        className="bg-black border-black border-2 font-semibold"
+                        side="right"
+                      >
+                        <p className=" text-white">
+                          {name} is subscribed to recieve notifications
+                        </p>
+                      </TooltipContent>
+                    )}
                   </Button>
                 ) : (
                   <Button
@@ -128,15 +141,16 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
                       size={18}
                       className=" text-red-700 group-hover:text-white rounded-full"
                     />
-
-                    <TooltipContent
-                      className="bg-white border-black border-2 font-semibold"
-                      side="right"
-                    >
-                      <p className=" text-black">
-                        {name} is not subscribed to recieve notifications
-                      </p>
-                    </TooltipContent>
+                    {resize && (
+                      <TooltipContent
+                        className="bg-white border-black border-2 font-semibold"
+                        side="right"
+                      >
+                        <p className=" text-black">
+                          {name} is not subscribed to recieve notifications
+                        </p>
+                      </TooltipContent>
+                    )}
                   </Button>
                 )}
               </TooltipTrigger>
@@ -149,7 +163,11 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
           <div className="grid gap-4">
             <div className="space-y-2">
               <h4 className="font-medium leading-none">{name}</h4>
-              <p className="text-sm text-muted-foreground">Send Notification</p>
+              {endpoint.length !== 0 && (
+                <p className="text-sm text-muted-foreground">
+                  Allowed to send or recieve Notification
+                </p>
+              )}
             </div>
             {endpoint.length !== 0 ? (
               <div className="grid gap-2">
