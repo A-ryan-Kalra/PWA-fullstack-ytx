@@ -14,3 +14,4 @@ export const triggeredNames = [
   "Upload new images daily for new awards 🤑 💸",
   "Howdy!! 🏖️ ",
 ];
+export const HamBurgerHandler = atom(false);

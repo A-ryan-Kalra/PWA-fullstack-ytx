@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Tabs, { showDashboard } from "./Tabs";
 import TabsDemo from "./Tabs";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import Adjustbar from "./Adjustbar";
-import { style, style1 } from "../constants/data";
+import { HamBurgerHandler, style, style1 } from "../constants/data";
 import { UserCircle } from "lucide-react";
 import { useSelector } from "react-redux";
 
+export const filter1 = atom(false);
 function Navigation() {
   const [show, setShow] = useState(false);
   const ref = useRef();
@@ -18,8 +19,11 @@ function Navigation() {
   const [count, setCount] = useState(0);
   const [check, setCheck] = useState("");
   const { currentUser } = useSelector((state) => state.user);
+  const [filterImg, setFilterImg] = useAtom(filter1);
+  const [ham, setHam] = useAtom(HamBurgerHandler);
+  const [timerId, setTimerId] = useState(null);
   // const urlParams = new URLSearchParams(location.search);
-
+  const [animate, setAnimate] = useState(false);
   useEffect(() => {
     setCheck(location.pathname);
   }, [location.pathname]);
@@ -38,6 +42,26 @@ function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [state]);
+
+  const handle = () => {
+    if (ham) {
+      setAnimate(false);
+      const timer = setTimeout(() => {
+        setHam(!ham);
+      }, 100);
+      setTimerId(timer);
+    } else {
+      setHam(!ham);
+      setFilterImg(!filterImg);
+    }
+  };
+  useEffect(() => {
+    return () => {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+    };
+  }, [ham, timerId]);
 
   useEffect(() => {
     const closeDropDown = (e) => {
@@ -119,6 +143,27 @@ function Navigation() {
             )}
           </div>
         </div>
+
+        <button
+          onClick={handle}
+          className="flex flex-col lg:hidden duration-200 z-[100] justify-center items-center"
+        >
+          <span
+            className={`bg-black duration-200 transition-all block h-0.5 w-6 rounded-sm  ${
+              ham ? "rotate-45 translate-y-1" : "-translate-y-0.5"
+            }`}
+          ></span>
+          <span
+            className={`bg-black  duration-500 transition-all my-0.5  block h-0.5 w-6 rounded-sm ${
+              ham ? "opacity-0 -translate-x-3" : "opacity-100"
+            }`}
+          ></span>
+          <span
+            className={`bg-black duration-200 transition-all  block h-0.5 w-6 rounded-sm  ${
+              ham ? "-rotate-45 -translate-y-1" : "translate-y-0.5"
+            }`}
+          ></span>
+        </button>
       </div>
     </nav>
   );
