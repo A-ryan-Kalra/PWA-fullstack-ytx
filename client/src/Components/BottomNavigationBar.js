@@ -41,19 +41,20 @@ function BottomNavigationBar() {
       if (!ref.current.contains(e.target)) {
         setCheck(location.pathname);
         setShow(false);
+        setCheck(location.pathname);
       }
     };
     document.addEventListener("click", closeDropDown);
 
     return () => document.removeEventListener("click", closeDropDown);
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className="fixed z-[100] sm:hidden w-full flex justify-around items-center text-white bg-black bottom-0">
       <div
         onClick={() => {
-          navigate("/");
           setCheck("/");
+          navigate("/");
         }}
         className={`duration-300 ${
           check === "/" && "bg-white/30"
@@ -64,8 +65,8 @@ function BottomNavigationBar() {
       {currentUser && (
         <div
           onClick={() => {
-            navigate("/dashboard");
             setCheck("/dashboard");
+            navigate("/dashboard");
           }}
           className={`duration-300 ${
             check === "/dashboard" && "bg-white/30"
@@ -76,6 +77,7 @@ function BottomNavigationBar() {
       )}
       <div
         ref={ref}
+        onBlur={() => setCheck(location.pathname)}
         onClick={() => {
           setCheck("setting");
           setShow(!show);
@@ -88,7 +90,9 @@ function BottomNavigationBar() {
         {show && (
           <div
             onClick={(e) => e.stopPropagation()}
-            className="absolute bg-white border-2 rounded-lg shadow-lg bottom-full -right-[60px]"
+            className={`absolute bg-white border-2 rounded-lg shadow-lg bottom-full ${
+              currentUser ? "-right-[40px]" : "-right-[60px]"
+            }`}
           >
             <TabsDemo turnOffSettings={turnOffSettings} />
           </div>
