@@ -47,7 +47,6 @@ function Navigation() {
       //   setSubmit(false);
       // }
       if (!ref.current.contains(e.target)) {
-        console.log("submit else if");
         setShow(false);
       }
     };

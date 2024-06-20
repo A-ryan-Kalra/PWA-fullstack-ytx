@@ -19,8 +19,8 @@ function RequestPermission() {
 
   useEffect(() => {
     if (!currentUser?.username) {
-      toast.error("Username does not exit please try to login again!");
-      navigate("/");
+      console.error("Username does not exit please try to login again!");
+      // navigate("/");
     } else {
       setUserData(currentUser);
     }

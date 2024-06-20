@@ -14,9 +14,9 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        {/* <Route element={<ProtectedRoute />}>
-        </Route> */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
 
       <Footer />

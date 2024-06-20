@@ -1,4 +1,4 @@
-import { PlusIcon } from "lucide-react";
+import { CheckCircleIcon, PlusIcon, XCircleIcon } from "lucide-react";
 import { Button } from "../Components/ui/button";
 import { Input } from "../Components/ui/input";
 import { Label } from "../Components/ui/label";
@@ -30,6 +30,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
   const navigate = useNavigate();
+  console.log("Endpoint=", endpoint);
   //   const [notification, setNotifications] = useState();
   const now = new Date();
   const formattedDate = format(now, "yyyy-MM-dd hh:mm a");
@@ -43,8 +44,8 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
 
   useEffect(() => {
     if (!currentUser?.username) {
-      toast.error("Username does not exit please try to login again!");
-      navigate("/");
+      console.error("Username does not exit please try to login again!");
+      // navigate("/");
     } else {
       setUserData(currentUser);
     }
@@ -67,6 +68,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
         }),
       });
       const data = await res.json();
+      toast.success("Notification sent successfully");
       // console.log(data);
       setDetails({
         body: "",
@@ -87,22 +89,58 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
           <TooltipProvider className="">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  className=" hover:bg-blue-500  group text-black flex"
-                  variant="outline"
-                  onClick={notificationRequest}
-                >
-                  <img
-                    className={"w-6 h-6 rounded-full"}
-                    src={profilePicture}
-                    alt={name}
-                  />
-                </Button>
+                {endpoint?.length !== 0 ? (
+                  <Button
+                    className=" hover:bg-blue-500 gap-1 group text-black flex"
+                    variant="outline"
+                    onClick={notificationRequest}
+                  >
+                    <img
+                      className={"w-5 h-5 rounded-full"}
+                      src={profilePicture}
+                      alt={name}
+                    />
+                    <CheckCircleIcon
+                      size={18}
+                      className=" text-green-700 group-hover:text-white rounded-full"
+                    />
+
+                    <TooltipContent
+                      className="bg-black border-black border-2 font-semibold"
+                      side="right"
+                    >
+                      <p className=" text-white">
+                        {name} is subscribed to recieve notifications
+                      </p>
+                    </TooltipContent>
+                  </Button>
+                ) : (
+                  <Button
+                    className=" hover:bg-blue-500 gap-1 group text-black flex"
+                    variant="outline"
+                    onClick={notificationRequest}
+                  >
+                    <img
+                      className={"w-5 h-5 rounded-full"}
+                      src={profilePicture}
+                      alt={name}
+                    />
+                    <XCircleIcon
+                      size={18}
+                      className=" text-red-700 group-hover:text-white rounded-full"
+                    />
+
+                    <TooltipContent
+                      className="bg-white border-black border-2 font-semibold"
+                      side="right"
+                    >
+                      <p className=" text-black">
+                        {name} is not subscribed to recieve notifications
+                      </p>
+                    </TooltipContent>
+                  </Button>
+                )}
               </TooltipTrigger>
-              <TooltipContent className="bg-black font-semibold" side="left">
-                {/* <PlusIcon className="w-[17px] h-[16px]  border-black group-hover:border-white border-[2px] group-hover:text-white font-semibold rounded-full" /> */}
-                <p>Send notification to {name}</p>
-              </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
@@ -112,47 +150,51 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
           <div className="grid gap-4">
             <div className="space-y-2">
               <h4 className="font-medium leading-none">{name}</h4>
-              <p className="text-sm text-muted-foreground">Send Message</p>
+              <p className="text-sm text-muted-foreground">Send Notification</p>
             </div>
-            <div className="grid gap-2">
-              <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="title">Title</Label>
-                <Input
-                  onChange={(e) =>
-                    setDetails((prev) => ({
-                      ...prev,
-                      [e.target.id]: e.target.value,
-                      createdAt: formattedDate,
-                    }))
-                  }
-                  value={details?.title}
-                  id="title"
-                  className="col-span-2 h-8"
-                />
+            {endpoint.length !== 0 ? (
+              <div className="grid gap-2">
+                <div className="grid grid-cols-3 items-center gap-4">
+                  <Label htmlFor="title">Title</Label>
+                  <Input
+                    onChange={(e) =>
+                      setDetails((prev) => ({
+                        ...prev,
+                        [e.target.id]: e.target.value,
+                        createdAt: formattedDate,
+                      }))
+                    }
+                    value={details?.title}
+                    id="title"
+                    className="col-span-2 h-8"
+                  />
+                </div>
+                <div className="grid grid-cols-3 items-center gap-4">
+                  <Label htmlFor="body">Body</Label>
+                  <Input
+                    id="body"
+                    onChange={(e) =>
+                      setDetails((prev) => ({
+                        ...prev,
+                        [e.target.id]: e.target.value,
+                        createdAt: formattedDate,
+                      }))
+                    }
+                    value={details?.body}
+                    className="col-span-2 h-8"
+                  />
+                </div>
+                <Button
+                  className="border-2  duration-200  bg-blue-500 text-white gap-2"
+                  variant="default"
+                  onClick={storeDetails}
+                >
+                  Submit
+                </Button>
               </div>
-              <div className="grid grid-cols-3 items-center gap-4">
-                <Label htmlFor="body">Body</Label>
-                <Input
-                  id="body"
-                  onChange={(e) =>
-                    setDetails((prev) => ({
-                      ...prev,
-                      [e.target.id]: e.target.value,
-                      createdAt: formattedDate,
-                    }))
-                  }
-                  value={details?.body}
-                  className="col-span-2 h-8"
-                />
-              </div>
-              <Button
-                className="border-2  duration-200  bg-blue-500 text-white gap-2"
-                variant="default"
-                onClick={storeDetails}
-              >
-                Submit
-              </Button>
-            </div>
+            ) : (
+              <h1>{name} has not enabled notifications on his end</h1>
+            )}
           </div>
         </PopoverContent>
       )}

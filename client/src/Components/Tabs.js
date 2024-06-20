@@ -38,7 +38,7 @@ export default function TabsDemo({ turnOffSettings }) {
   const [userProfile, setUserProfile] = useState();
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  console.log("currentUser", currentUser);
+  // console.log("currentUser", currentUser);
 
   useEffect(() => {
     setUserProfile(currentUser);
