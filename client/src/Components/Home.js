@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import SearchSideBar from "./SearchSideBar";
 import { Progress } from "./ui/progress";
 import { ClipLoader } from "react-spinners";
+import { atom, useAtom } from "jotai";
+
+export const triggerGlobal = atom(false);
+export const temporaryGlobal = atom([]);
 function Home() {
   const [product, setProduct] = useState();
-  const [temporary, setTemporary] = useState();
-  const [trigger, setTrigger] = useState(false);
+  const [temporary, setTemporary] = useAtom(temporaryGlobal);
+  const [trigger, setTrigger] = useAtom(triggerGlobal);
   const [bar, setBar] = useState(0);
 
   const [page, setPage] = useState(1);
@@ -65,11 +69,11 @@ function Home() {
       {trigger && <Progress value={bar} />}
 
       <div className="min-h-screen  md:flex-row flex-col w-full gap-6 flex">
-        <div className="md:min-w-[440px] md:max-w-[450px] z-10 h-fit sticky top-[89px]">
+        <div className="max-md:hidden md:min-w-[440px] md:max-w-[450px] z-10 h-fit sticky top-[89px]">
           <h1 className="text-[25px] bg-white  text-center font-mono">
             Generate a post
           </h1>
-          {/* <SearchSideBar triggerChange={triggerChange} /> */}
+          <SearchSideBar triggerChange={triggerChange} />
         </div>
 
         <div className="flex-col flex">

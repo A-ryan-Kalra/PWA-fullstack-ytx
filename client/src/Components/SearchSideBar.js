@@ -3,7 +3,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { DataCollection } from "../constants/data";
 import { Button } from "./ui/button";
-function SearchSideBar({ triggerChange }) {
+function SearchSideBar({ triggerChange, handle }) {
   const [details, setDetails] = useState({
     title: "",
     description: "",
@@ -72,7 +72,9 @@ function SearchSideBar({ triggerChange }) {
           />
         </div>
       )}
-      <Button type="submit">Submit</Button>
+      <Button onClick={handle} type="submit">
+        Submit
+      </Button>
     </form>
   );
 }

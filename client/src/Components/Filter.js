@@ -3,13 +3,16 @@ import { useAtom } from "jotai";
 import { filter1 } from "./Navigation";
 import { ArrowUpCircle } from "lucide-react";
 import { HamBurgerHandler } from "../constants/data";
+import SearchSideBar from "./SearchSideBar";
+import { temporaryGlobal, triggerGlobal } from "./Home";
 
 function Filter() {
   const [filterImg, setFilterImg] = useAtom(filter1);
   const [animate, setAnimate] = useState(false);
   const [timerId, setTimerId] = useState(null);
   const [ham, setHam] = useAtom(HamBurgerHandler);
-
+  const [temporary, setTemporary] = useAtom(temporaryGlobal);
+  const [trigger, setTrigger] = useAtom(triggerGlobal);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (filterImg) {
@@ -35,6 +38,11 @@ function Filter() {
     };
   }, []);
 
+  function triggerChange(data) {
+    setTemporary((prev) => [data, ...prev]);
+    setTrigger(!trigger);
+  }
+
   return (
     <div className="fixed inset-0 bg-black/60 z-[200]" onClick={handle}>
       <div
@@ -55,8 +63,12 @@ function Filter() {
             className="rounded-full hover:bg-[#efebeb] cursor-pointer"
           />
         </div>
-        {/* <Sidebar /> */}
-        <div className="h-[30vh]"></div>
+        <div className="md:min-w-[440px] md:max-w-[450px] z-10 h-fit sticky top-[89px]">
+          <h1 className="text-[25px] bg-white  text-center font-mono">
+            Generate a post
+          </h1>
+          <SearchSideBar handle={handle} triggerChange={triggerChange} />
+        </div>
       </div>
     </div>
   );
