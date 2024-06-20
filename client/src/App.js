@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import BottomNavigationBar from "./Components/BottomNavigationBar";
 import Filter from "./Components/Filter";
 import { useAtom } from "jotai";
+import ScrollUp from "./Components/ScrollUp";
 
 function App() {
   const [filterImg, setFilterImg] = useAtom(filter1);
@@ -18,6 +19,7 @@ function App() {
       <Toaster />
       {filterImg && <Filter />}
       <Navigation />
+      <ScrollUp />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route element={<ProtectedRoute />}>

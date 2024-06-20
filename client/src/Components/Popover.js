@@ -72,7 +72,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
 
   const storeDetails = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/user/save-details", {
+      const res = await fetch("/api/user/save-details", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +124,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
                     {resize && (
                       <TooltipContent
                         className="bg-black border-black border-2 font-semibold"
-                        side="right"
+                        side="left"
                       >
                         <p className=" text-white">
                           {name} is subscribed to recieve notifications
@@ -150,7 +150,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
                     {resize && (
                       <TooltipContent
                         className="bg-white border-black border-2 font-semibold"
-                        side="right"
+                        side="left"
                       >
                         <p className=" text-black">
                           {name} is not subscribed to recieve notifications

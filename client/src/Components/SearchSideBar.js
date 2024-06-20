@@ -72,7 +72,11 @@ function SearchSideBar({ triggerChange, handle }) {
           />
         </div>
       )}
-      <Button onClick={handle} type="submit">
+      <Button
+        onClick={handle}
+        className="bg-black hover:bg-black/80 font-semibold"
+        type="submit"
+      >
         Submit
       </Button>
     </form>

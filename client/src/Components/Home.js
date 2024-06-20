@@ -3,6 +3,7 @@ import SearchSideBar from "./SearchSideBar";
 import { Progress } from "./ui/progress";
 import { ClipLoader } from "react-spinners";
 import { atom, useAtom } from "jotai";
+import ScrollUp from "./ScrollUp";
 
 export const triggerGlobal = atom(false);
 export const temporaryGlobal = atom([]);
@@ -11,7 +12,8 @@ function Home() {
   const [temporary, setTemporary] = useAtom(temporaryGlobal);
   const [trigger, setTrigger] = useAtom(triggerGlobal);
   const [bar, setBar] = useState(0);
-
+  const [check, setCheck] = useState(false);
+  const [check1, setCheck1] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
 
@@ -66,10 +68,13 @@ function Home() {
 
   return (
     <div className="min-h-screen w-full gap-3 flex  flex-col">
+      <ScrollUp trigger={page} />
       {trigger && <Progress value={bar} />}
 
       <div className="min-h-screen  md:flex-row flex-col w-full gap-6 flex">
-        <div className="max-md:hidden md:min-w-[440px] md:max-w-[450px] z-10 h-fit sticky top-[89px]">
+        <div
+          className={` max-md:hidden md:min-w-[440px] md:max-w-[450px] z-10 h-fit sticky top-[89px]`}
+        >
           <h1 className="text-[25px] bg-white  text-center font-mono">
             Generate a post
           </h1>
@@ -78,7 +83,7 @@ function Home() {
 
         <div className="flex-col flex">
           <h1 className="text-left max-md:text-center text-[30px] md:text-[40px] font-serif">
-            Dummy Checker
+            Dummy Images Collection
           </h1>
 
           <div className="border-l-2 flex flex-wrap justify-start p-2 max-md:justify-center gap-3">

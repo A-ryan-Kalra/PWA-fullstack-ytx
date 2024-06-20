@@ -105,9 +105,6 @@ function Filter() {
           </h1>
           <SearchSideBar handle={handle} triggerChange={triggerChange} />
         </div>
-        {/* ) : (
-          <div></div>
-        )} */}
       </div>
     </div>
   );
