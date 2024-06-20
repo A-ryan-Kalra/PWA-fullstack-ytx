@@ -17,12 +17,14 @@ import {
 } from "../Components/ui/tabs";
 import { atom, useAtom } from "jotai";
 import { updateNotification } from "./Popover";
-import { useDispatch } from "react-redux";
-import { signInSuccess } from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { signInSuccess, signOut } from "../redux/user/userSlice";
 import Input from "./Input";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const showDashboard = atom(false);
-export default function TabsDemo({}) {
+export default function TabsDemo({ turnOffSettings }) {
   const [user, setUser] = useState();
   const [details, setDetails] = useState({
     username: "",
@@ -33,7 +35,17 @@ export default function TabsDemo({}) {
   const [updateNotificationAtom, setUpdateNotificationAtom] =
     useAtom(updateNotification);
   const dispatch = useDispatch();
-  const [passwordShow, setPasswordShow] = useState(false);
+  const [userProfile, setUserProfile] = useState();
+  const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  console.log("currentUser", currentUser);
+
+  useEffect(() => {
+    setUserProfile(currentUser);
+  }, [currentUser]);
+
+  // console.log(details);
+
   const handleRegister = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/user/register", {
@@ -48,18 +60,20 @@ export default function TabsDemo({}) {
       if (!res.ok) {
         setErrorWarn(data.message);
       } else {
+        toast.success("Registered Successfully");
+        turnOffSettings();
         setUser(data);
         setDashboardAtom(data.isAdmin);
         localStorage.setItem("isAdmin", JSON.stringify(data.isAdmin));
         dispatch(signInSuccess(data));
         // localStorage.setItem("userData", JSON.stringify(data));
         setErrorWarn("");
+        setDetails({
+          password: "",
+          username: "",
+        });
       }
 
-      setDetails({
-        password: "",
-        username: "",
-      });
       setUpdateNotificationAtom((prev) => !prev);
     } catch (error) {
       console.error("Something went wrong ", error);
@@ -80,31 +94,53 @@ export default function TabsDemo({}) {
       if (!res.ok) {
         setErrorWarn(data.message);
       } else {
+        toast.success("Successfully logged in");
+        turnOffSettings();
         setUser(data);
         setDashboardAtom(data.isAdmin);
         localStorage.setItem("isAdmin", JSON.stringify(data.isAdmin));
         // localStorage.setItem("userData", JSON.stringify(data));
         dispatch(signInSuccess(data));
         setErrorWarn("");
+        setDetails({
+          password: "",
+          username: "",
+        });
       }
-      setDetails({
-        password: "",
-        username: "",
-      });
+
       setUpdateNotificationAtom((prev) => !prev);
     } catch (error) {
       console.error("Something went wrong ", error);
     }
   };
 
+  function handleLogout() {
+    navigate("/");
+    toast.success("Successfully logged out");
+    dispatch(signOut());
+  }
+
   // console.log("user", user);
   return (
-    <Tabs defaultValue="register" className="w-[300px] md:w-[400px]">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="register">Register</TabsTrigger>
-        <TabsTrigger value="login">Login</TabsTrigger>
+    <Tabs
+      defaultValue={currentUser ? "account" : "register"}
+      className=" w-[300px] md:w-[400px] shadow-md rounded-md"
+    >
+      <TabsList
+        onClick={() => {
+          setDetails({
+            password: "",
+            username: "",
+          });
+          setErrorWarn("");
+        }}
+        className={`grid w-full ${currentUser ? "grid-cols-1" : "grid-cols-2"}`}
+      >
+        {!currentUser && <TabsTrigger value="register">Register</TabsTrigger>}
+        {!currentUser && <TabsTrigger value="login">Login</TabsTrigger>}
+        {currentUser && <TabsTrigger value="account">Account</TabsTrigger>}
       </TabsList>
-      <TabsContent value="register">
+      <TabsContent value="register" className="">
         <Card>
           <CardHeader>
             <CardTitle>Register</CardTitle>
@@ -113,7 +149,7 @@ export default function TabsDemo({}) {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Input
-                label="username"
+                label="Username"
                 id="username"
                 type={"text"}
                 value={details.username}
@@ -129,7 +165,7 @@ export default function TabsDemo({}) {
               <Input
                 id="password"
                 type="password"
-                label={"password"}
+                label={"Password"}
                 value={details.password}
                 onChange={(e) =>
                   setDetails((prev) => ({
@@ -139,6 +175,11 @@ export default function TabsDemo({}) {
                 }
               />
             </div>
+            {errorWarn && (
+              <h1 className="text-red-600 bg-red-500/30 p-2 rounded-md">
+                {errorWarn}
+              </h1>
+            )}
           </CardContent>
           <CardFooter>
             <Button className="" onClick={handleRegister}>
@@ -156,7 +197,7 @@ export default function TabsDemo({}) {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Input
-                label="username"
+                label="Username"
                 id="username"
                 type={"text"}
                 value={details.username}
@@ -172,7 +213,7 @@ export default function TabsDemo({}) {
               <Input
                 id="password"
                 type="password"
-                label={"password"}
+                label={"Password"}
                 value={details.password}
                 onChange={(e) =>
                   setDetails((prev) => ({
@@ -193,6 +234,21 @@ export default function TabsDemo({}) {
           </CardFooter>
         </Card>
       </TabsContent>
+      {currentUser && (
+        <TabsContent value="account" className="">
+          <Card>
+            <CardHeader>
+              <CardTitle>Hello, {userProfile?.username}</CardTitle>
+              <CardDescription>Hope to see you again!</CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Button className="" onClick={handleLogout}>
+                Log Out
+              </Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+      )}
     </Tabs>
   );
 }

@@ -2,22 +2,23 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Tabs, { showDashboard } from "./Tabs";
 import TabsDemo from "./Tabs";
-import { Button } from "./ui/button";
 import { useAtom } from "jotai";
-import Authentication from "./Authentication";
 import Adjustbar from "./Adjustbar";
 import { style, style1 } from "../constants/data";
+import { UserCircle } from "lucide-react";
+import { useSelector } from "react-redux";
 
 function Navigation() {
   const [show, setShow] = useState(false);
   const ref = useRef();
+  const [submit, setSubmit] = useState(false);
   const [state, setState] = useState(false);
   const [dashboardAtom, setDashboardAtom] = useAtom(showDashboard);
   const location = useLocation();
   const [count, setCount] = useState(0);
   const [check, setCheck] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
   // const urlParams = new URLSearchParams(location.search);
-  console.log(count);
 
   useEffect(() => {
     setCheck(location.pathname);
@@ -40,7 +41,13 @@ function Navigation() {
 
   useEffect(() => {
     const closeDropDown = (e) => {
+      // if (submit) {
+      //   console.log("submit");
+      //   setShow(false);
+      //   setSubmit(false);
+      // }
       if (!ref.current.contains(e.target)) {
+        console.log("submit else if");
         setShow(false);
       }
     };
@@ -55,6 +62,10 @@ function Navigation() {
     setDashboardAtom(res);
   }, [dashboardAtom]);
 
+  function turnOffSettings() {
+    console.log("Wut");
+    setShow(false);
+  }
   return (
     <nav
       // className="bg-fuchsia-300 shadow-md sticky top-0 z-[100]"
@@ -76,30 +87,28 @@ function Navigation() {
           >
             Home
           </Link>
-          {dashboardAtom && (
+          {currentUser && (
             <Link
               to={"/dashboard"}
               className={`${
                 check === "/dashboard" ? style1 : style
               } text-[15px] md:text-[20px]  font-semibold`}
+              onClick={() => setCheck("/dashboard")}
             >
               Dashboard
             </Link>
           )}
 
-          <div className="relative" ref={ref} onClick={() => setShow(true)}>
-            <button
-              className={`${
-                check === "settings" ? style1 : style
-              } text-[15px] md:text-[20px]  font-semibold  `}
-              variant="outline"
-              onClick={() => setCheck("settings")}
-            >
-              Settings
+          <div
+            className="relative flex p-[4px] hover:bg-[#dddde4]  duration-200 rounded-full"
+            ref={ref}
+            onClick={() => setShow(true)}
+          >
+            <button>
+              <UserCircle className="outline-none" />
             </button>
-            <div className="absolute  top-10 right-[30%] 2xl:-right-full ">
-              {show && <TabsDemo />}
-              {/* {show && <Authentication />} */}
+            <div className="absolute bg-white top-10 right-[30%] 2xl:-right-full ">
+              {show && <TabsDemo turnOffSettings={turnOffSettings} />}
             </div>
           </div>
         </div>

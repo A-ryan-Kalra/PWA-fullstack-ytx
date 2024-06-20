@@ -42,7 +42,7 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
   });
 
   useEffect(() => {
-    if (!currentUser.username) {
+    if (!currentUser?.username) {
       toast.error("Username does not exit please try to login again!");
       navigate("/");
     } else {

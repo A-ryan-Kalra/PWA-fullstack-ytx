@@ -34,7 +34,7 @@ export default function TableDemo({
   const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userData"));
-    if (!currentUser.username) {
+    if (!currentUser?.username) {
       toast.error("Username does not exit please try to login again!");
       navigate("/");
     } else {

@@ -71,6 +71,13 @@ export const getDetails = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const form = req.body;
+    const existingUser = await User.findOne({
+      username: form.username,
+    });
+    if (existingUser) {
+      return res.status(404).json({ message: "User already exist" });
+    }
+    console.log("Wait wut=", existingUser);
     const newUser = await User.create({
       username: form.username,
       password: form.password,
@@ -89,7 +96,7 @@ export const getUser = async (req, res) => {
       username,
     });
     if (!user) {
-      return res.status(404).json({ message: "User does not exit" });
+      return res.status(404).json({ message: "User does not exist" });
     }
     res.status(200).json(user);
     // console.log(req.body);
