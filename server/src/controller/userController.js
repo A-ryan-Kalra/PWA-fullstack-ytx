@@ -1,4 +1,3 @@
-import { title } from "process";
 import Detail from "../models/detail.model.js";
 import User from "../models/user.model.js";
 
@@ -14,7 +13,7 @@ webPush.setVapidDetails(
   apiKeys.publicKey,
   apiKeys.privateKey
 );
-export const saveEndpoint = async (req, res) => {
+export const saveEndpoint = async (req, res, next) => {
   const { username, endpoint } = req.body;
   try {
     console.log("username=", username);
@@ -32,10 +31,11 @@ export const saveEndpoint = async (req, res) => {
     res.status(200).json(endPoint);
   } catch (error) {
     console.error(error);
+    next(error);
   }
 };
 
-export const saveDetails = async (req, res) => {
+export const saveDetails = async (req, res, next) => {
   const { details, endpoint, receiver, sender } = req.body;
 
   try {
@@ -55,20 +55,22 @@ export const saveDetails = async (req, res) => {
     res.status(200).json(newDetails);
   } catch (error) {
     console.error(error);
+    next(error);
   }
 };
 
-export const getDetails = async (req, res) => {
+export const getDetails = async (req, res, next) => {
   try {
     const getDetails = await Detail.find();
 
     res.status(200).json(getDetails);
   } catch (error) {
     console.error(error);
+    next(error);
   }
 };
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, res, next) => {
   try {
     const form = req.body;
     const existingUser = await User.findOne({
@@ -86,10 +88,11 @@ export const createUser = async (req, res) => {
     res.status(200).json(newUser);
   } catch (error) {
     console.error(error);
+    next(error);
   }
 };
 
-export const getUser = async (req, res) => {
+export const getUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({
@@ -102,14 +105,16 @@ export const getUser = async (req, res) => {
     // console.log(req.body);
   } catch (error) {
     console.error(error);
+    next(error);
   }
 };
 
-export const getUsers = async (req, res) => {
+export const getUsers = async (req, res, next) => {
   try {
     const allUsers = await User.find();
     res.status(200).json(allUsers);
   } catch (error) {
     console.error(error);
+    next(error);
   }
 };
