@@ -55,7 +55,7 @@ function SearchSideBar({ triggerChange, handle }) {
           className="border-2 w-full h-20 resize-none focus-visible:outline-none p-2 rounded-md"
         />
       </div>
-      <div className="border-2 border-neutral-300 p-2 rounded-lg">
+      <div className="border-2 border-neutral-300  overflow-hidden p-2 rounded-lg">
         <input
           type="file"
           className="text-ellipsis"

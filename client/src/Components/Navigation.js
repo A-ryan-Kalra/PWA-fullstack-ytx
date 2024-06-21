@@ -8,6 +8,8 @@ import { HamBurgerHandler, style, style1 } from "../constants/data";
 import { UserCircle } from "lucide-react";
 import { useSelector } from "react-redux";
 
+export const arrowTurn = atom(false);
+
 export const filter1 = atom(false);
 function Navigation() {
   const [show, setShow] = useState(false);
@@ -24,6 +26,8 @@ function Navigation() {
   const [timerId, setTimerId] = useState(null);
   // const urlParams = new URLSearchParams(location.search);
   const [animate, setAnimate] = useState(false);
+  const [turn, setTurn] = useAtom(arrowTurn);
+
   useEffect(() => {
     setCheck(location.pathname);
   }, [location.pathname]);
@@ -45,14 +49,18 @@ function Navigation() {
 
   const handle = () => {
     if (ham) {
+      setTurn(false);
       setAnimate(false);
       const timer = setTimeout(() => {
         setHam(!ham);
       }, 100);
       setTimerId(timer);
     } else {
-      setHam(!ham);
-      setFilterImg(!filterImg);
+      setTurn(true);
+      const timer = setTimeout(() => {
+        setHam(!ham);
+        setFilterImg(!filterImg);
+      }, 300);
     }
   };
   useEffect(() => {
@@ -103,7 +111,7 @@ function Navigation() {
             state ? "scale-105 duration-700" : "scale-90 duration-700"
           }`}
         >
-          WebApp
+          PhotoBasket
         </Link>
         <div className="flex justify-center items-center gap-5 p-2  md:gap-10 max-sm:hidden">
           <Link
@@ -113,6 +121,14 @@ function Navigation() {
             } text-[15px] md:text-[20px]  font-semibold  `}
           >
             Home
+          </Link>
+          <Link
+            to={"/posts"}
+            className={`${
+              check === "/posts" ? style1 : style
+            } text-[15px] md:text-[20px]  font-semibold  `}
+          >
+            Posts
           </Link>
           {currentUser && (
             <Link
@@ -144,27 +160,30 @@ function Navigation() {
             )}
           </div>
         </div>
-
-        <button
-          onClick={handle}
-          className="flex flex-col sm:hidden duration-200 z-[100] justify-center items-center"
-        >
-          <span
-            className={`bg-black duration-200 transition-all block h-0.5 w-6 rounded-sm  ${
-              ham ? "rotate-45 translate-y-1" : "-translate-y-0.5"
-            }`}
-          ></span>
-          <span
-            className={`bg-black  duration-500 transition-all my-0.5  block h-0.5 w-6 rounded-sm ${
-              ham ? "opacity-0 -translate-x-3" : "opacity-100"
-            }`}
-          ></span>
-          <span
-            className={`bg-black duration-200 transition-all  block h-0.5 w-6 rounded-sm  ${
-              ham ? "-rotate-45 -translate-y-1" : "translate-y-0.5"
-            }`}
-          ></span>
-        </button>
+        {location.pathname === "/posts" && (
+          <button
+            onClick={handle}
+            className={`flex flex-col ${
+              turn ? "rotate-90" : "rotate-0"
+            } sm:hidden duration-200 z-[100] justify-center items-center`}
+          >
+            <span
+              className={`bg-black duration-200 transition-all block h-0.5 w-6 rounded-sm  ${
+                ham ? "rotate-45 translate-y-1" : "-translate-y-0.5"
+              }`}
+            ></span>
+            <span
+              className={`bg-black  duration-500 transition-all my-0.5  block h-0.5 w-6 rounded-sm ${
+                ham ? "opacity-0 -translate-x-3" : "opacity-100"
+              }`}
+            ></span>
+            <span
+              className={`bg-black duration-200 transition-all  block h-0.5 w-6 rounded-sm  ${
+                ham ? "-rotate-45 -translate-y-1" : "translate-y-0.5"
+              }`}
+            ></span>
+          </button>
+        )}
       </div>
     </nav>
   );

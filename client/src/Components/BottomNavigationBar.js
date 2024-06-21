@@ -1,4 +1,9 @@
-import { HomeIcon, LayoutDashboardIcon, UserCircle } from "lucide-react";
+import {
+  HomeIcon,
+  ImagePlusIcon,
+  LayoutDashboardIcon,
+  UserCircle,
+} from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -61,6 +66,17 @@ function BottomNavigationBar() {
         } p-2  rounded-full overflow-hidden`}
       >
         <HomeIcon className="" />
+      </div>
+      <div
+        onClick={() => {
+          setCheck("/posts");
+          navigate("/posts");
+        }}
+        className={`duration-300 ${
+          check === "/posts" && "bg-white/30"
+        } p-2  rounded-full overflow-hidden`}
+      >
+        <ImagePlusIcon className="" />
       </div>
       {currentUser && (
         <div

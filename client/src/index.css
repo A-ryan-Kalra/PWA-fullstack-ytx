@@ -57,3 +57,42 @@
     @apply bg-background text-foreground;
   }
 }
+.contain {
+  padding: 20px;
+  margin: 20px auto;
+  overflow: hidden;
+  columns: 4;
+  column-gap: 10px;
+}
+
+.contain .box {
+  width: 100%;
+  margin-bottom: 10px;
+
+  overflow-x: auto;
+  break-inside: avoid;
+}
+
+.contain .box img {
+  max-width: 100%;
+  border-radius: 15px;
+}
+
+@media (max-width: 1200px) {
+  .contain {
+    width: calc(100%-40px);
+    padding: 10px;
+    columns: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .contain {
+    columns: 2;
+  }
+}
+@media (max-width: 480px) {
+  .contain {
+    columns: 1;
+  }
+}

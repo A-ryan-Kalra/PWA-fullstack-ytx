@@ -83,7 +83,7 @@ function Home() {
 
         <div className="flex-col flex">
           <h1 className="text-left max-md:text-center text-[30px] md:text-[40px] font-serif">
-            Dummy Images Collection
+            Today's Top Chart
           </h1>
 
           <div className="border-l-2 flex flex-wrap justify-start p-2 max-md:justify-center gap-3">
@@ -91,11 +91,11 @@ function Home() {
               product.slice(0, 10).map((item, index) => (
                 <div
                   key={index}
-                  className="hover:shadow-2xl duration-200 border-[1px] rounded-md shadow-md border-neutral-200 cursor-pointer p-3 "
+                  className="hover:shadow-2xl max-w-[320px] duration-200 border-[1px] rounded-md shadow-md border-neutral-200 cursor-pointer p-3 "
                 >
-                  <div className=" w-fit overflow-hidden">
+                  <div className="w-fit overflow-hidden">
                     <img
-                      className="h-64 w-64"
+                      className="h-64 bg-cover w-64"
                       src={item.thumbnail}
                       alt={item.title}
                     />
@@ -103,7 +103,7 @@ function Home() {
                   <h1>
                     {index + 1}. {item.title}
                   </h1>
-                  <p className="max-w-[320px]">{item.description}</p>
+                  <p className="">{item.description}</p>
                 </div>
               ))
             ) : (

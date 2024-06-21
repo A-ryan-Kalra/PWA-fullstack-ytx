@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { filter1 } from "./Navigation";
+import { arrowTurn, filter1 } from "./Navigation";
 import { ArrowBigUp, ArrowBigUpDashIcon, ArrowUpCircle } from "lucide-react";
 import { HamBurgerHandler } from "../constants/data";
 import SearchSideBar from "./SearchSideBar";
@@ -13,11 +13,13 @@ function Filter() {
   const [timerId, setTimerId] = useState(null);
   const [timer1Id, setTimer1Id] = useState(null);
   const [timer2Id, setTimer2Id] = useState(null);
+  const [timer3Id, setTimer3Id] = useState(null);
   const [ham, setHam] = useAtom(HamBurgerHandler);
   const [temporary, setTemporary] = useAtom(temporaryGlobal);
   const [trigger, setTrigger] = useAtom(triggerGlobal);
   const [bar, setBar] = useState(false);
   const [bar1, setBar1] = useState(false);
+  const [turn, setTurn] = useAtom(arrowTurn);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -44,6 +46,10 @@ function Filter() {
       setBar(false);
       const timer = setTimeout(() => {
         const timer1 = setTimeout(() => {
+          const timer3Id = setTimeout(() => {
+            setTurn(false);
+          }, 400);
+          setTimer3Id(timer3Id);
           setFilterImg(!filterImg);
           setHam(false);
         }, 500);
@@ -60,6 +66,7 @@ function Filter() {
       clearTimeout(timerId);
       clearTimeout(timer1Id);
       clearTimeout(timer2Id);
+      clearTimeout(timer3Id);
     };
   }, []);
 
