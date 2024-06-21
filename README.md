@@ -1,7 +1,5 @@
-<h3>Website is live and running at  <a href="https://pwa-fullstack-ytx.onrender.com/">PWA WebApp</a>
+<h3>Website is live and running at  <a href="https://pwa-fullstack-ytx.onrender.com/">PhotoBasket</a>
 </h3>
-<div>
-<div align="center"><img src="/client/public/docker.png" /></div>
 </div>
 
 <h2>Authors</h2>
@@ -23,7 +21,7 @@
 
 <h1>Landing Page</h1>
 
-![alt text](image.png)
+![alt text](image-7.png)
 
 </br>
 <h1>Registration</h1>
@@ -31,7 +29,7 @@
 <li>You need to register your account first</li>
 </ul>
 
-![alt text](image-2.png)
+![alt text](image-8.png)
 
 </br>
 <h1>Dashboard Visibility</h1>
@@ -39,7 +37,7 @@
 <li>Once you are registered you will see the dashboard access.</li>
 </ul>
 
-![alt text](image-3.png)
+![alt text](image-9.png)
 
 </br>
 <h1>Admin Dashboard</h1>
@@ -47,7 +45,7 @@
 <li>Now you can connect to below registered users by making a push notifications.</li>
 </ul>
 
-![alt text](image-4.png)
+![alt text](image-10.png)
 
 </br>
 <h1>Permission</h1>
@@ -55,7 +53,7 @@
 <li>It requires permission to make users subsribed to notifications.</li>
 </ul>
 
-![alt text](image-5.png)
+![alt text](image-11.png)
 </br>
 
 <h1>Push Notifications</h1>
@@ -63,7 +61,14 @@
 <li>Once the permission is granted, you can now send the notifications to registered users.</li>
 </ul>
 
-![alt text](image-6.png)
+![alt text](image-12.png)
+
+<h1>Voila! 🎉</h1>
+<ul>
+<li>It works! 🥳</li>
+</ul>
+
+![alt text](image-1.png)
 
 <div align="center">
 
