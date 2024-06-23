@@ -40,7 +40,16 @@ export const saveDetails = async (req, res, next) => {
 
   try {
     console.log("THis time is different= ", req.body);
+    const user = await User.find({
+      username: req.body.receiver,
+    });
 
+    if (user[0].endpoint.length === 0) {
+      console.log("Hello");
+      return res.status(409).json({
+        message: `${req.body.receiver} has not enabled notifications on their end.`,
+      });
+    }
     const newDetails = new Detail({
       title: details.title,
       body: details.body,
@@ -54,7 +63,7 @@ export const saveDetails = async (req, res, next) => {
     webPush.sendNotification(endpoint[0], JSON.stringify(details));
     res.status(200).json(newDetails);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     next(error);
   }
 };
@@ -87,7 +96,7 @@ export const createUser = async (req, res, next) => {
 
     res.status(200).json(newUser);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     next(error);
   }
 };

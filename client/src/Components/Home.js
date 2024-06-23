@@ -129,7 +129,7 @@ function Home() {
             <span
               key={i}
               onClick={() => handlePage(i + 1)}
-              className={`px-3 py-1 ${
+              className={`px-2.5 py-1 ${
                 i + 1 === page
                   ? "hover:opacity-70 cursor-pointer rounded-full bg-[#1565C1] text-white "
                   : "hover:bg-emerald-300 cursor-pointer rounded-full"

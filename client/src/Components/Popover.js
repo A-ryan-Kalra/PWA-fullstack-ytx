@@ -85,8 +85,11 @@ export function PopoverDemo({ profilePicture, name, endpoint }) {
         }),
       });
       const data = await res.json();
-      toast.success("Notification sent successfully");
-      // console.log(data);
+      if (res.ok) {
+        toast.success("Notification sent successfully");
+      } else {
+        toast.error(data.message);
+      }
       setDetails({
         body: "",
         title: "",
