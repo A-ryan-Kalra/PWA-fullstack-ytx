@@ -4,6 +4,7 @@ import { Progress } from "./ui/progress";
 import { ClipLoader } from "react-spinners";
 import { atom, useAtom } from "jotai";
 import ScrollUp from "./ScrollUp";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const triggerGlobal = atom(false);
 export const temporaryGlobal = atom([]);
@@ -118,19 +119,19 @@ function Home() {
         <div className="w-full flex max-sm:text-[10px] duration-300 items-center justify-center my-10">
           {page > 1 && (
             <span
-              className="cursor-pointer border-2 rounded-md p-2 hover:bg-gray-300"
+              className="cursor-pointer rounded-md px-2 py-1 hover:bg-gray-200"
               onClick={() => handlePage(page - 1)}
             >
-              Previous
+              <ChevronLeft />
             </span>
           )}
           {[...Array(Math.round(totalPage / 10))].slice(0, 10)?.map((_, i) => (
             <span
               key={i}
               onClick={() => handlePage(i + 1)}
-              className={`py-2 px-3 ${
+              className={`px-3 py-1 ${
                 i + 1 === page
-                  ? "hover:opacity-70 cursor-pointer border-2 rounded-full bg-gray-300 border-gray-400"
+                  ? "hover:opacity-70 cursor-pointer rounded-full bg-[#1565C1] text-white "
                   : "hover:bg-emerald-300 cursor-pointer rounded-full"
               }`}
               index={i}
@@ -141,10 +142,10 @@ function Home() {
 
           {page < totalPage / 10 && (
             <span
-              className="cursor-pointer border-2 rounded-md p-2 hover:bg-lime-300"
+              className="cursor-pointer rounded-md px-2 py-1 hover:bg-gray-200"
               onClick={() => handlePage(page + 1)}
             >
-              Next
+              <ChevronRight />
             </span>
           )}
         </div>
